@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="100">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="GUI" displayName="GUI" projectFiles="true">
+      <logicalFolder name="Cameras" displayName="Cameras" projectFiles="true">
+        <itemPath>GUI/Cameras/CameraViewer.cpp.cc</itemPath>
+        <itemPath>GUI/Cameras/CameraViewer.h</itemPath>
+        <itemPath>GUI/Cameras/CameraViewer.ui</itemPath>
+        <itemPath>GUI/Cameras/ImageViewer.cpp.cc</itemPath>
+        <itemPath>GUI/Cameras/ImageViewer.h</itemPath>
+        <itemPath>GUI/Cameras/ImageViewer.ui</itemPath>
+      </logicalFolder>
+      <itemPath>GUI/CalibrationExecutor.cpp.cc</itemPath>
+      <itemPath>GUI/CalibrationExecutor.h</itemPath>
+      <itemPath>GUI/CalibrationExecutor.ui</itemPath>
+      <itemPath>GUI/MainMenuWindow.cpp.cc</itemPath>
+      <itemPath>GUI/MainMenuWindow.h</itemPath>
+      <itemPath>GUI/MainMenuWindow.ui</itemPath>
+    </logicalFolder>
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="NetWork" displayName="NetWork" projectFiles="true">
+      <itemPath>NetWork/CommunicatingSocket.cpp</itemPath>
+      <itemPath>NetWork/CommunicatingSocket.h</itemPath>
+      <itemPath>NetWork/FillAddress.h</itemPath>
+      <itemPath>NetWork/Socket.cpp</itemPath>
+      <itemPath>NetWork/Socket.h</itemPath>
+      <itemPath>NetWork/SocketException.cpp</itemPath>
+      <itemPath>NetWork/SocketException.h</itemPath>
+      <itemPath>NetWork/TCPServerSocket.cpp</itemPath>
+      <itemPath>NetWork/TCPServerSocket.h</itemPath>
+      <itemPath>NetWork/TCPSocket.cpp</itemPath>
+      <itemPath>NetWork/TCPSocket.h</itemPath>
+      <itemPath>NetWork/UDPSocket.cpp</itemPath>
+      <itemPath>NetWork/UDPSocket.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="Settings" displayName="Settings" projectFiles="true">
+      <itemPath>Settings/camerasConfig.ini</itemPath>
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <itemPath>main.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="Utils" displayName="Utils" projectFiles="true">
+      <logicalFolder name="Calibration" displayName="Calibration" projectFiles="true">
+        <itemPath>Utils/Calibration/CameraCalibration.cpp</itemPath>
+        <itemPath>Utils/Calibration/CameraCalibration.h</itemPath>
+        <itemPath>Utils/Calibration/PointsCollectorBase.h</itemPath>
+        <itemPath>Utils/Calibration/PointsCollectorChess.cpp</itemPath>
+        <itemPath>Utils/Calibration/PointsCollectorChess.h</itemPath>
+        <itemPath>Utils/Calibration/PointsCollectorCircles.cpp</itemPath>
+        <itemPath>Utils/Calibration/PointsCollectorCircles.h</itemPath>
+        <itemPath>Utils/Calibration/utils.cpp</itemPath>
+        <itemPath>Utils/Calibration/utils.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="ImageProcessing"
+                     displayName="ImageProcessing"
+                     projectFiles="true">
+        <itemPath>Utils/ImageProcessing/ImageTransformation.cpp</itemPath>
+        <itemPath>Utils/ImageProcessing/ImageTransformation.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="ImagesColor" displayName="ImagesColor" projectFiles="true">
+        <itemPath>Utils/ImagesColor/FalseColor.cpp</itemPath>
+        <itemPath>Utils/ImagesColor/FalseColor.h</itemPath>
+        <itemPath>Utils/ImagesColor/LutTables.h</itemPath>
+      </logicalFolder>
+      <itemPath>Utils/FieldOfViewChecker.cpp</itemPath>
+      <itemPath>Utils/FieldOfViewChecker.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceRootList>
+    <Elem>GUI</Elem>
+    <Elem>NetWork</Elem>
+    <Elem>Utils</Elem>
+    <Elem>Settings</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="4">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <qt>
+        <modules>core gui widgets</modules>
+      </qt>
+      <compileType>
+        <ccTool>
+          <standard>11</standard>
+          <incDir>
+            <pElem>/usr/local/opencv_3.4.7/include</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <linkerDynSerch>
+            <pElem>/usr/local/opencv_3.4.7/lib</pElem>
+          </linkerDynSerch>
+          <linkerLibItems>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_aruco.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_bgsegm.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_bioinspired.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_calib3d.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_ccalib.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_core.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_datasets.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_dnn.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_dnn_objdetect.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_dpm.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_face.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_features2d.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_flann.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_fuzzy.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_hfs.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_highgui.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_img_hash.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_imgcodecs.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_imgproc.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_line_descriptor.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_ml.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_objdetect.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_optflow.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_phase_unwrapping.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_photo.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_plot.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_reg.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_rgbd.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_saliency.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_sfm.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_shape.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_stereo.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_stitching.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_structured_light.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_superres.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_surface_matching.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_text.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_tracking.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_video.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_videoio.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_videostab.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_xfeatures2d.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_ximgproc.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_xobjdetect.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/opencv_3.4.7/lib/libopencv_xphoto.so</linkerLibFileItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="GUI/CalibrationExecutor.cpp.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GUI/CalibrationExecutor.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GUI/CalibrationExecutor.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GUI/Cameras/CameraViewer.cpp.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GUI/Cameras/CameraViewer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GUI/Cameras/CameraViewer.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GUI/Cameras/ImageViewer.cpp.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GUI/Cameras/ImageViewer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GUI/Cameras/ImageViewer.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GUI/MainMenuWindow.cpp.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GUI/MainMenuWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GUI/MainMenuWindow.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NetWork/CommunicatingSocket.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="NetWork/CommunicatingSocket.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NetWork/FillAddress.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NetWork/Socket.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="NetWork/Socket.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NetWork/SocketException.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="NetWork/SocketException.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NetWork/TCPServerSocket.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="NetWork/TCPServerSocket.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NetWork/TCPSocket.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="NetWork/TCPSocket.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NetWork/UDPSocket.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="NetWork/UDPSocket.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Settings/camerasConfig.ini" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Utils/Calibration/CameraCalibration.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Utils/Calibration/CameraCalibration.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Utils/Calibration/PointsCollectorBase.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Utils/Calibration/PointsCollectorChess.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Utils/Calibration/PointsCollectorChess.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Utils/Calibration/PointsCollectorCircles.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Utils/Calibration/PointsCollectorCircles.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Utils/Calibration/utils.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Utils/Calibration/utils.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Utils/FieldOfViewChecker.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Utils/FieldOfViewChecker.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Utils/ImageProcessing/ImageTransformation.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Utils/ImageProcessing/ImageTransformation.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Utils/ImagesColor/FalseColor.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Utils/ImagesColor/FalseColor.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Utils/ImagesColor/LutTables.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="4">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <qt>
+        <buildMode>1</buildMode>
+        <modules>core gui widgets</modules>
+      </qt>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+      </compileType>
+      <item path="GUI/CalibrationExecutor.cpp.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GUI/CalibrationExecutor.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GUI/CalibrationExecutor.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GUI/Cameras/CameraViewer.cpp.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GUI/Cameras/CameraViewer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GUI/Cameras/CameraViewer.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GUI/Cameras/ImageViewer.cpp.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GUI/Cameras/ImageViewer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GUI/Cameras/ImageViewer.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GUI/MainMenuWindow.cpp.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GUI/MainMenuWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GUI/MainMenuWindow.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NetWork/CommunicatingSocket.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="NetWork/CommunicatingSocket.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NetWork/FillAddress.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NetWork/Socket.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="NetWork/Socket.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NetWork/SocketException.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="NetWork/SocketException.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NetWork/TCPServerSocket.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="NetWork/TCPServerSocket.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NetWork/TCPSocket.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="NetWork/TCPSocket.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NetWork/UDPSocket.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="NetWork/UDPSocket.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Settings/camerasConfig.ini" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Utils/Calibration/CameraCalibration.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Utils/Calibration/CameraCalibration.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Utils/Calibration/PointsCollectorBase.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Utils/Calibration/PointsCollectorChess.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Utils/Calibration/PointsCollectorChess.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Utils/Calibration/PointsCollectorCircles.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Utils/Calibration/PointsCollectorCircles.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Utils/Calibration/utils.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Utils/Calibration/utils.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Utils/FieldOfViewChecker.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Utils/FieldOfViewChecker.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Utils/ImageProcessing/ImageTransformation.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Utils/ImageProcessing/ImageTransformation.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Utils/ImagesColor/FalseColor.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Utils/ImagesColor/FalseColor.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Utils/ImagesColor/LutTables.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
