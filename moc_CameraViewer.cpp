@@ -30,14 +30,14 @@ static const uint qt_meta_data_CameraViewer[] = {
        0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      20,   14,   13,   13, 0x0a,
-      38,   13,   13,   13, 0x0a,
+      14,   13,   13,   13, 0x0a,
+      32,   13,   13,   13, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_CameraViewer[] = {
-    "CameraViewer\0\0image\0setFrame(cv::Mat)\0"
+    "CameraViewer\0\0setFrame(cv::Mat)\0"
     "VideoStreaming()\0"
 };
 
@@ -59,7 +59,7 @@ const QMetaObjectExtraData CameraViewer::staticMetaObjectExtraData = {
 };
 
 const QMetaObject CameraViewer::staticMetaObject = {
-    { &QDialog::staticMetaObject, qt_meta_stringdata_CameraViewer,
+    { &QWidget::staticMetaObject, qt_meta_stringdata_CameraViewer,
       qt_meta_data_CameraViewer, &staticMetaObjectExtraData }
 };
 
@@ -77,12 +77,12 @@ void *CameraViewer::qt_metacast(const char *_clname)
     if (!_clname) return 0;
     if (!strcmp(_clname, qt_meta_stringdata_CameraViewer))
         return static_cast<void*>(const_cast< CameraViewer*>(this));
-    return QDialog::qt_metacast(_clname);
+    return QWidget::qt_metacast(_clname);
 }
 
 int CameraViewer::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QDialog::qt_metacall(_c, _id, _a);
+    _id = QWidget::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {

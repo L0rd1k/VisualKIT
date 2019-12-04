@@ -1,7 +1,14 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 /* 
  * File:   CameraViewer.h
- * Author: ilya petrikov
- * Created on November 19, 2019, 11:14 AM
+ * Author: Ilya Petrikov
+ *
+ * Created on December 3, 2019, 4:23 PM
  */
 
 #ifndef _CAMERAVIEWER_H
@@ -28,16 +35,16 @@
 #include "opencv2/imgproc.hpp"
 #endif
 
-class CameraViewer : public QDialog {
+class CameraViewer : public QWidget {
     Q_OBJECT
 public:
     CameraViewer(std::string fpath);
     virtual ~CameraViewer();
-    void startCapturing();
+    cv::VideoCapture startCapturing();
     void startStreaming();
     cv::Mat getFrameFromCapture();
 public slots:
-    void setFrame(cv::Mat image);
+    void setFrame(cv::Mat);
     void VideoStreaming();
 private:
     Ui::CameraViewer *widget = NULL;

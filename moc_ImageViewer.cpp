@@ -30,13 +30,14 @@ static const uint qt_meta_data_ImageViewer[] = {
        0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      19,   13,   12,   12, 0x0a,
+      29,   13,   12,   12, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_ImageViewer[] = {
-    "ImageViewer\0\0image\0setFrame(cv::Mat)\0"
+    "ImageViewer\0\0image,imagePath\0"
+    "setFrame(cv::Mat,QString)\0"
 };
 
 void ImageViewer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -45,7 +46,7 @@ void ImageViewer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         Q_ASSERT(staticMetaObject.cast(_o));
         ImageViewer *_t = static_cast<ImageViewer *>(_o);
         switch (_id) {
-        case 0: _t->setFrame((*reinterpret_cast< cv::Mat(*)>(_a[1]))); break;
+        case 0: _t->setFrame((*reinterpret_cast< cv::Mat(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
         default: ;
         }
     }

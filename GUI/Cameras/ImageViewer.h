@@ -42,7 +42,7 @@ public:
     ImageViewer();
     virtual ~ImageViewer();
 public slots:
-    void setFrame(cv::Mat image);
+    void setFrame(cv::Mat image, QString imagePath);
 private:
     Ui::ImageViewer *widget = NULL;
 };

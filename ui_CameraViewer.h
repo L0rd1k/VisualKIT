@@ -13,10 +13,10 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
-#include <QtGui/QDialog>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
 #include <QtGui/QVBoxLayout>
+#include <QtGui/QWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -26,16 +26,16 @@ public:
     QVBoxLayout *verticalLayout;
     QLabel *ImageLabel;
 
-    void setupUi(QDialog *CameraViewer)
+    void setupUi(QWidget *CameraViewer)
     {
         if (CameraViewer->objectName().isEmpty())
             CameraViewer->setObjectName(QString::fromUtf8("CameraViewer"));
-        CameraViewer->resize(510, 326);
+        CameraViewer->resize(572, 396);
         verticalLayout = new QVBoxLayout(CameraViewer);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         ImageLabel = new QLabel(CameraViewer);
         ImageLabel->setObjectName(QString::fromUtf8("ImageLabel"));
-        ImageLabel->setMinimumSize(QSize(400, 400));
+        ImageLabel->setMinimumSize(QSize(300, 300));
         ImageLabel->setAlignment(Qt::AlignCenter);
 
         verticalLayout->addWidget(ImageLabel);
@@ -46,10 +46,10 @@ public:
         QMetaObject::connectSlotsByName(CameraViewer);
     } // setupUi
 
-    void retranslateUi(QDialog *CameraViewer)
+    void retranslateUi(QWidget *CameraViewer)
     {
         CameraViewer->setWindowTitle(QApplication::translate("CameraViewer", "CameraViewer", 0, QApplication::UnicodeUTF8));
-        ImageLabel->setText(QApplication::translate("CameraViewer", "Here must be a video stream!!!", 0, QApplication::UnicodeUTF8));
+        ImageLabel->setText(QString());
     } // retranslateUi
 
 };

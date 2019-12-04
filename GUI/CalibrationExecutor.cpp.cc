@@ -16,7 +16,6 @@
 #include "CalibrationExecutor.h"
 #include "ui_MainMenuWindow.h"
 
-
 CalibrationExecutor::CalibrationExecutor() : widget(new Ui::CalibrationExecutor) {
     widget->setupUi(this);
     connect(widget->btn_calculateFOVClicked, SIGNAL(clicked(bool)), this, SLOT(calculateFieldOfView()));
@@ -26,6 +25,7 @@ CalibrationExecutor::CalibrationExecutor() : widget(new Ui::CalibrationExecutor)
     widget->lineEdit_IntrinsicsFileName->setText("intrinsics");
     setDefaultCircleValue();
     singleCameraCalibration();
+    widget->scrollArea->setVisible(false);
 }
 
 // ---> DESIGN CHECKER - BEGIN
@@ -105,37 +105,25 @@ void CalibrationExecutor::addVideoPathToComboBox() {
 void CalibrationExecutor::singleCameraCalibration() {
     addVideoPathToComboBox();
     connect(widget->btn_startStreaming, SIGNAL(clicked(bool)), this, SLOT(collectImagesFromSingleCamera()));
-    //    cv::VideoCapture c(0);
-    //    cv::Mat originalImage;
-    //    while (true) {
-    //        c >> originalImage;
-    //        cv::Mat test = originalImage.clone();
-    //        auto points = obj_pointsCollector->collectFramePoints(test);
-    //        qDebug() << "Points :" << points.size();
-    //        if (points.size() > 0) {
-    //            if (originalImage.cols > 0 && originalImage.rows > 0 && points.size() > 0) {
-    //                Mat cornersImage = originalImage.clone();
-    //                drawChessboardCorners(cornersImage, obj_pointsCollector->getChessboardSize(), points, true);
-    //                cv::imshow("RES", cornersImage);
-    //            }
-    //        } else {
-    //            cv::imshow("RES", originalImage);
-    //        }
-    ////        cv::imshow("RES", originalImage);
-    //        cv::waitKey(30);
-    //    }
-    //        cv::Mat resultImage = collectTemplatePoints(originalImage);
-    //        cv::imshow("RES", resultImage);
-    //        cv::waitKey(10);
-    //    }
+}
+
+void CalibrationExecutor::updateFrame() {
+    cv::Mat frame;
+    capture >> frame;
+    cv::cvtColor(frame, frame, CV_BGR2RGB);
+    collectTemplatePoints(frame);
+    connect(this, SIGNAL(imageReady(cv::Mat)), obj_camViewer, SLOT(setFrame(cv::Mat)));
+    emit obj_camViewer->setFrame(collectTemplatePoints(frame));
 }
 
 void CalibrationExecutor::collectImagesFromSingleCamera() {
-    removeAllElementsFromLayout(widget->verticalLayout_Cameras);
-    CameraViewer * obj_camViewer = new CameraViewer(widget->comboBox_pathOptions->currentText().toStdString());
+    widget->scrollArea->setVisible(true);
+    obj_camViewer = new CameraViewer(widget->comboBox_pathOptions->currentText().toStdString());
     widget->verticalLayout_Cameras->addWidget(obj_camViewer, 50);
-    obj_camViewer->startCapturing();
-    obj_camViewer->startStreaming();
+    capture = obj_camViewer->startCapturing();
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(updateFrame()));
+    timer->start(10);
 }
 
 cv::Mat CalibrationExecutor::collectTemplatePoints(cv::Mat &originalImage) {
@@ -157,8 +145,6 @@ cv::Mat CalibrationExecutor::showTemplatePoints(cv::Mat &image, vector<Point2f> 
     }
     return image;
 }
-
-
 // ---> VIDEO IMAGES EXTRACTION - END
 
 
@@ -177,6 +163,7 @@ void CalibrationExecutor::checkCurrentTemplateState() {
 }
 
 void CalibrationExecutor::camerasCalibration() {
+    widget->scrollArea->setVisible(true);
     obj_cameraCalibration = new CameraCalibration();
     widget->listWidget->clear();
     removeAllElementsFromLayout(widget->verticalLayout_Cameras);
@@ -189,9 +176,10 @@ void CalibrationExecutor::camerasCalibration() {
         widget->label_HintResults->setText("Images wasn't found!");
         return;
     }
+
     for (int id = 0; id < imagesFromFolder.size(); id++) {
         ImageViewer* obj_imageViewer = new ImageViewer();
-        widget->verticalLayout_Cameras->addWidget(obj_imageViewer, 50);
+        //        widget->verticalLayout_Cameras->addWidget(obj_imageViewer, 50);
         Mat image = imread(folderPath.toStdString() + "/" + imagesFromFolder[id].toStdString());
         if (widget->comboBox_CameraBreed->currentIndex() == 1) {
             bitwise_not(image, image);
@@ -202,13 +190,15 @@ void CalibrationExecutor::camerasCalibration() {
         } else {
             imageSize = image.size();
             auto points = obj_pointsCollector->collectFramePoints(image);
+            qDebug() << "Points " + QString::number(id) + " ---------- ";
             if (points.size() > 0) {
                 counterImageFound++;
                 widget->listWidget->addItem(QString::number(id + 1) + " - Loading " + QString(imagesFromFolder[id]));
                 if (image.cols > 0 && image.rows > 0 && points.size() > 0) {
+                    widget->verticalLayout_Cameras->addWidget(obj_imageViewer, 50);
                     drawChessboardCorners(image, obj_pointsCollector->getChessboardSize(), points, true);
                     cv::Mat imageWithCorners = image.clone();
-                    obj_imageViewer->setFrame(imageWithCorners);
+                    obj_imageViewer->setFrame(imageWithCorners, QString(imagesFromFolder[id]));
                     imagesPoints.push_back(points);
                 }
             } else {

@@ -76,6 +76,7 @@ private slots:
     void selectCheckboxChessboard();
     void selectCheckboxCircle();
     void collectImagesFromSingleCamera();
+    void updateFrame();
 signals:
     void imageReady(cv::Mat);
 private:
@@ -84,6 +85,8 @@ private:
     CameraCalibration* obj_cameraCalibration;
     std::vector<CameraViewer*> viewers;
 private:
+    CameraViewer *obj_camViewer;
+    cv::VideoCapture capture;
     PatternConfig *patternConf;
     int counterImageFound = 0;
     QString folderPath;

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>547</width>
-    <height>418</height>
+    <width>596</width>
+    <height>368</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,11 +15,50 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_Name">
+     <item>
+      <widget class="QLabel" name="label_ImageName">
+       <property name="text">
+        <string>Image Name:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_ImagePath">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_Size">
+     <item>
+      <widget class="QLabel" name="label_ImageSize">
+       <property name="text">
+        <string>Image Size:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_ImageSizeValue">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
     <widget class="QLabel" name="ImageLabel">
      <property name="minimumSize">
       <size>
-       <width>500</width>
-       <height>500</height>
+       <width>300</width>
+       <height>300</height>
       </size>
      </property>
      <property name="text">
@@ -27,6 +66,13 @@
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>

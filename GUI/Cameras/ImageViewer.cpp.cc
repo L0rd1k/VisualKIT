@@ -18,13 +18,15 @@ ImageViewer::ImageViewer() : widget(new Ui::ImageViewer){
     widget->setupUi(this);
 }
 
-void ImageViewer::setFrame(cv::Mat cornersImage) {
+void ImageViewer::setFrame(cv::Mat cornersImage, QString imagePath) {
     QImage tempHudImage((uchar*) cornersImage.data, cornersImage.cols, cornersImage.rows, cornersImage.step, QImage::Format_RGB888);
     tempHudImage.scaled(widget->ImageLabel->size(), Qt::KeepAspectRatio);
     QPixmap resultPixmap(tempHudImage.size());
     QPainter p(&resultPixmap);
     p.drawPixmap(0, 0, QPixmap::fromImage(tempHudImage));
     widget->ImageLabel->setPixmap(QPixmap::fromImage(tempHudImage).scaled(widget->ImageLabel->size(), Qt::KeepAspectRatio, Qt::FastTransformation)); //, Qt::KeepAspectRatio, Qt::FastTransformation
+    widget->label_ImagePath->setText(imagePath);
+    widget->label_ImageSizeValue->setText(QString::number(cornersImage.cols) + " x " + QString::number(cornersImage.rows));
 }
 
 ImageViewer::~ImageViewer() {

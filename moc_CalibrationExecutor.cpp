@@ -22,7 +22,7 @@ static const uint qt_meta_data_CalibrationExecutor[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -38,6 +38,7 @@ static const uint qt_meta_data_CalibrationExecutor[] = {
       85,   20,   20,   20, 0x08,
      112,   20,   20,   20, 0x08,
      135,   20,   20,   20, 0x08,
+     167,   20,   20,   20, 0x08,
 
        0        // eod
 };
@@ -48,6 +49,7 @@ static const char qt_meta_stringdata_CalibrationExecutor[] = {
     "selectCheckboxChessboard()\0"
     "selectCheckboxCircle()\0"
     "collectImagesFromSingleCamera()\0"
+    "updateFrame()\0"
 };
 
 void CalibrationExecutor::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -62,6 +64,7 @@ void CalibrationExecutor::qt_static_metacall(QObject *_o, QMetaObject::Call _c, 
         case 3: _t->selectCheckboxChessboard(); break;
         case 4: _t->selectCheckboxCircle(); break;
         case 5: _t->collectImagesFromSingleCamera(); break;
+        case 6: _t->updateFrame(); break;
         default: ;
         }
     }
@@ -99,9 +102,9 @@ int CalibrationExecutor::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 7;
     }
     return _id;
 }

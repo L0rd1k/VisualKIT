@@ -6,9 +6,9 @@
 
 /*
  * File:   CameraViewer.cpp
- * Author: ilya
+ * Author: Ilya Petrikov
  *
- * Created on November 19, 2019, 11:14 AM
+ * Created on December 3, 2019, 4:23 PM
  */
 
 #include "CameraViewer.h"
@@ -30,7 +30,7 @@ CameraViewer::~CameraViewer() {
     delete widget;
 }
 
-void CameraViewer::startCapturing() {
+cv::VideoCapture CameraViewer::startCapturing() {
     if (path == "0") {
         capture.open(0);
     } else {
@@ -39,13 +39,13 @@ void CameraViewer::startCapturing() {
     if (!capture.isOpened()) {
         qDebug() << "Unfortunately capturing was unsuccessful!";
     }
+    return capture;
 }
 
 void CameraViewer::startStreaming() {
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(VideoStreaming()));
     timer->start(1);
-    _stateTimer.start();
 }
 
 cv::Mat CameraViewer::getFrameFromCapture() {
