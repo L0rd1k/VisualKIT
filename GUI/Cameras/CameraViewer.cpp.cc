@@ -36,9 +36,21 @@ cv::VideoCapture CameraViewer::startCapturing() {
     } else {
         capture.open(path);
     }
-    if (!capture.isOpened()) {
-        qDebug() << "Unfortunately capturing was unsuccessful!";
-    }
+#define CAPTURE_PROP
+#ifndef CAPTURE_PROP
+    qDebug() << "FPS : " << capture.get(cv::CAP_PROP_FPS);
+    qDebug() << "Width : " << capture.get(cv::CAP_PROP_FRAME_WIDTH);
+    qDebug() << "Height : " << capture.get(cv::CAP_PROP_FRAME_HEIGHT);
+    int codecType = static_cast<int> (capture.get(CV_CAP_PROP_FOURCC));
+    char codecTypeChar[] = {
+        (char) (codecType & 0XFF),
+        (char) ((codecType & 0XFF00) >> 8),
+        (char) ((codecType & 0XFF0000) >> 16),
+        (char) ((codecType & 0XFF000000) >> 24),
+        0
+    };
+    qDebug() << "Codec type : " << codecTypeChar;
+#endif
     return capture;
 }
 
@@ -54,20 +66,7 @@ cv::Mat CameraViewer::getFrameFromCapture() {
 }
 
 void CameraViewer::VideoStreaming() {
-        getFrameFromCapture();
-    //    qDebug() << "FPS : " << capture.get(cv::CAP_PROP_FPS);
-    //    qDebug() << "Width : " << capture.get(cv::CAP_PROP_FRAME_WIDTH);
-    //    qDebug() << "Height : " << capture.get(cv::CAP_PROP_FRAME_HEIGHT);
-    //    int codecType = static_cast<int> (capture.get(CV_CAP_PROP_FOURCC));
-    //    char codecTypeChar[] = {
-    //        (char) (codecType & 0XFF),
-    //        (char) ((codecType & 0XFF00) >> 8),
-    //        (char) ((codecType & 0XFF0000) >> 16),
-    //        (char) ((codecType & 0XFF000000) >> 24),
-    //        0
-    //    };
-    //    printf("fourcc=%d\n", codecType);
-    //    qDebug() << "Exposure : " << codecTypeChar;
+    getFrameFromCapture();
     frameCounter++;
     if (frame.empty()) {
         qDebug() << "Frame is empty!";

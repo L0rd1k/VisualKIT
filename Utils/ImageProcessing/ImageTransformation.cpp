@@ -21,12 +21,12 @@ void ImageTransformation::drawPoints(Mat image, int x, int y) {
 
 vector<vector<cv::Point2f> > ImageTransformation::getFeaturePoints() {
     vector<vector<cv::Point2f> > rectangleVector;
-    // TV - points
+    // IK - points
     rectangleVector.push_back({cv::Point2f(261, 149),
         cv::Point2f(442, 355),
         cv::Point2f(247, 210),
         cv::Point2f(222, 190)});
-    // IK - points
+    // TV
     rectangleVector.push_back({cv::Point2f(409, 193),
         cv::Point2f(662, 485),
         cv::Point2f(388, 280),

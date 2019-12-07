@@ -19,6 +19,7 @@ ImageViewer::ImageViewer() : widget(new Ui::ImageViewer){
 }
 
 void ImageViewer::setFrame(cv::Mat cornersImage, QString imagePath) {
+    cv::cvtColor(cornersImage, cornersImage, CV_BGR2RGB);
     QImage tempHudImage((uchar*) cornersImage.data, cornersImage.cols, cornersImage.rows, cornersImage.step, QImage::Format_RGB888);
     tempHudImage.scaled(widget->ImageLabel->size(), Qt::KeepAspectRatio);
     QPixmap resultPixmap(tempHudImage.size());

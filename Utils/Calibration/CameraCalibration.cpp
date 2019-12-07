@@ -32,10 +32,9 @@ QString CameraCalibration::saveCalibrationResults(Mat m, Mat d, Size imageSize, 
     FileStorage fs(filename, CV_STORAGE_WRITE);
     if (fs.isOpened()) {
         fs << "m" << m << "d" << d << "s" << imageSize << "err" << err;
-        oss << endl << "Matrix = " << endl << m << endl << endl <<
-                "Distortion = " << d << endl << endl <<
-                "Image size = " << imageSize << endl << endl <<
-                "Error = " << err << endl;
+        oss << endl << "Матрица внутренних параметров : = " << endl << m << endl << endl <<
+                "Дисторсия = " << d << endl << endl <<
+                "Размер изображения = " << imageSize << endl << endl;
                 fs.release();
     }
     return QString(oss.str().c_str());

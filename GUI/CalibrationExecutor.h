@@ -16,6 +16,7 @@
 #include "Utils/Calibration/PointsCollectorChess.h"
 #include "Utils/Calibration/PointsCollectorCircles.h"
 #include "Utils/Calibration/CameraCalibration.h"
+#include "CalibrationExecutor.h"
 
 #include <string>
 #include <iostream>
@@ -40,6 +41,9 @@
 #include <QFile>
 #include <QMessageBox>
 #include <QXmlStreamReader>
+#include <QTextCodec>
+#include <QLocale>
+#include <QTranslator>
 #endif
 
 #ifndef OPENCV_INCLUDE

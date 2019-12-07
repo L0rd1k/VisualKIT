@@ -7,12 +7,10 @@
 /*
  * File:   CalibrationExecutor.cpp
  * Author: ilya
- *
  * Created on November 22, 2019, 5:23 PM
  */
 
 #include <qt4/QtCore/qfsfileengine.h>
-
 #include "CalibrationExecutor.h"
 #include "ui_MainMenuWindow.h"
 
@@ -27,7 +25,6 @@ CalibrationExecutor::CalibrationExecutor() : widget(new Ui::CalibrationExecutor)
     singleCameraCalibration();
     widget->scrollArea->setVisible(false);
 }
-
 // ---> DESIGN CHECKER - BEGIN
 
 void CalibrationExecutor::setDefaultCircleValue() {
@@ -111,25 +108,37 @@ void CalibrationExecutor::updateFrame() {
     cv::Mat frame;
     capture >> frame;
     cv::cvtColor(frame, frame, CV_BGR2RGB);
-    collectTemplatePoints(frame);
+    if (widget->checkBox_RealTime->isChecked()) {
+        collectTemplatePoints(frame);
+    }
     connect(this, SIGNAL(imageReady(cv::Mat)), obj_camViewer, SLOT(setFrame(cv::Mat)));
     emit obj_camViewer->setFrame(collectTemplatePoints(frame));
 }
 
 void CalibrationExecutor::collectImagesFromSingleCamera() {
-    widget->scrollArea->setVisible(true);
-    obj_camViewer = new CameraViewer(widget->comboBox_pathOptions->currentText().toStdString());
-    widget->verticalLayout_Cameras->addWidget(obj_camViewer, 50);
+    std::string videoPath;
+    if (!widget->lineEdit_videoIPPath->text().isEmpty()) {
+        videoPath = widget->lineEdit_videoIPPath->text().toStdString();
+    } else {
+        videoPath = widget->comboBox_pathOptions->currentText().toStdString();
+    }
+    obj_camViewer = new CameraViewer(videoPath);
     capture = obj_camViewer->startCapturing();
+    if (!capture.isOpened()) {
+        widget->label_HintResults->setStyleSheet("color : red ; font: 14pt;}");
+        widget->label_HintResults->setText("Захват потока не удался\n(проверьте правильность пути)!");
+        return;
+    }
+    widget->scrollArea->setVisible(true);
+    widget->verticalLayout_Cameras->addWidget(obj_camViewer, 50);
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateFrame()));
-    timer->start(10);
+    timer->start(20);
 }
 
 cv::Mat CalibrationExecutor::collectTemplatePoints(cv::Mat &originalImage) {
     obj_pointsCollector = std::make_unique<PointsCollectorChess>(8, 6, 27);
     auto points = obj_pointsCollector->collectFramePoints(originalImage);
-    qDebug() << "Points :" << points.size();
     if (points.size() > 0) {
         cv::Mat resultImage = showTemplatePoints(originalImage, points);
         return resultImage;
@@ -171,29 +180,27 @@ void CalibrationExecutor::camerasCalibration() {
     folderPath = obj_cameraCalibration->getImagesFolder();
     imagesFromFolder = obj_cameraCalibration->getImagesFromFolder(folderPath);
     imagesPoints.clear();
+
     if (imagesFromFolder.size() == 0) {
         widget->label_HintResults->setStyleSheet("color : red ; font: 14pt;}");
-        widget->label_HintResults->setText("Images wasn't found!");
         return;
     }
-
+    
     for (int id = 0; id < imagesFromFolder.size(); id++) {
         ImageViewer* obj_imageViewer = new ImageViewer();
-        //        widget->verticalLayout_Cameras->addWidget(obj_imageViewer, 50);
         Mat image = imread(folderPath.toStdString() + "/" + imagesFromFolder[id].toStdString());
         if (widget->comboBox_CameraBreed->currentIndex() == 1) {
             bitwise_not(image, image);
         }
         if (image.size().width == 0 || image.size().height == 0) {
-            widget->listWidget->addItem(QString::number(id + 1) + " - Loading " + QString(imagesFromFolder[id]) + " <<  No points detected!");
+            widget->listWidget->addItem(QString::number(id + 1) + " - Загрузка " + QString(imagesFromFolder[id]) + " <<  Точки не обнаружены!");
             continue;
         } else {
             imageSize = image.size();
             auto points = obj_pointsCollector->collectFramePoints(image);
-            qDebug() << "Points " + QString::number(id) + " ---------- ";
             if (points.size() > 0) {
                 counterImageFound++;
-                widget->listWidget->addItem(QString::number(id + 1) + " - Loading " + QString(imagesFromFolder[id]));
+                widget->listWidget->addItem(QString::number(id + 1) + " - Загрузка " + QString(imagesFromFolder[id]));
                 if (image.cols > 0 && image.rows > 0 && points.size() > 0) {
                     widget->verticalLayout_Cameras->addWidget(obj_imageViewer, 50);
                     drawChessboardCorners(image, obj_pointsCollector->getChessboardSize(), points, true);
@@ -202,20 +209,20 @@ void CalibrationExecutor::camerasCalibration() {
                     imagesPoints.push_back(points);
                 }
             } else {
-                widget->listWidget->addItem(QString::number(id + 1) + " - Loading " + QString(imagesFromFolder[id]) + " <<  No points detected!");
+                widget->listWidget->addItem(QString::number(id + 1) + " - Загрузка " + QString(imagesFromFolder[id]) + " <<  Точки не обнаружены!");
             }
         }
     }
     if (imagesPoints.size() == 0) {
         widget->label_HintResults->setStyleSheet("color : red ; font: 14pt;}");
-        widget->label_HintResults->setText("Patterns wasn't found");
+        widget->label_HintResults->setText("Шаблон не был найден!");
     } else {
         widget->label_HintResults->setStyleSheet("color : green ; font: 14pt;}");
-        widget->label_HintResults->setText("Patterns was found : " + QString::number(counterImageFound) + "/" + QString::number(imagesFromFolder.size()));
+        widget->label_HintResults->setText("Шаблон был найден : " + QString::number(counterImageFound) + "/" + QString::number(imagesFromFolder.size()));
         counterImageFound = 0;
         calibrationError = obj_cameraCalibration->collectCalibrationObjectPoints(*obj_pointsCollector, imagesPoints, imageSize);
         widget->listWidget->addItem(obj_cameraCalibration->saveCalibrationResults(std::get<1>(calibrationError), std::get<2>(calibrationError), imageSize, std::get<0>(calibrationError)));
-        widget->listWidget->addItem("Calibration Result : " + QString::number(std::get<0>(calibrationError)) + "\n");
+        widget->listWidget->addItem("Результаты калибровки : " + QString::number(std::get<0>(calibrationError)) + "\n");
     }
 }
 // ---> IMAGES CALIBRATION - END
@@ -249,7 +256,7 @@ int CalibrationExecutor::calculateFoV() {
     double x = fovChecker.getFov(imageSize.width, FovAxis::X);
     double y = fovChecker.getFov(imageSize.height, FovAxis::Y);
     widget->label_FOV->setStyleSheet("color : blue ; font: 14pt;}");
-    widget->label_FOV->setText(" Field of View : " + QString::number(x) + "  x  " + QString::number(y));
+    widget->label_FOV->setText(" Угол обзора : " + QString::number(x) + "  x  " + QString::number(y));
     return 0;
 }
 // ---> FIELD OF VIEW - END
