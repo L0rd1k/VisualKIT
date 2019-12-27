@@ -15,17 +15,39 @@
 
 #include "MainMenuWindow.h"
 
-void MainMenuWindow::SelectUsedExtensions() {
-    obj_calibExecutor = new CalibrationExecutor();
-    widget->horizontalLayout->addWidget(obj_calibExecutor, 10);
-}
-
 MainMenuWindow::MainMenuWindow() : widget(new Ui::MainMenuWindow) {
     widget->setupUi(this);
+    connect(widget->pb_fov, SIGNAL(clicked(bool)), this, SLOT(regime_CalculateFoV()));
+    connect(widget->pb_singlecalib, SIGNAL(clicked(bool)), this, SLOT(regime_CalculateSingleCalib()));
+}
+
+void MainMenuWindow::regime_CalculateFoV() {
+    removeAllElementsFromLayout(widget->vl_execution);
+    obj_fov = new FieldOfViewWindow();
+    widget->vl_execution->addWidget(obj_fov, 10);
+}
+
+void MainMenuWindow::regime_CalculateSingleCalib() {
+    removeAllElementsFromLayout(widget->vl_execution);
+    obj_singleCalib = new SingleCameraCalibration();
+    widget->vl_execution->addWidget(obj_singleCalib, 10);
+}
+
+void MainMenuWindow::removeAllElementsFromLayout(QLayout* layout) {
+    QLayoutItem* child;
+    while (layout->count() != 0) {
+        child = layout->takeAt(0);
+        if (child->layout() != 0) {
+            removeAllElementsFromLayout(child->layout());
+        } else if (child->widget() != 0) {
+            delete child->widget();
+        }
+        delete child;
+    }
 }
 
 MainMenuWindow::~MainMenuWindow() {
     delete widget;
-    delete obj_calibExecutor;
-    delete obj_camViewer;
+    delete obj_fov;
+    delete obj_singleCalib;
 }

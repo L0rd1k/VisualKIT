@@ -48,7 +48,7 @@ private:
     PointsCollectorBase *obj_pointsCollector;
     std::ostringstream oss;
 public:
-    QString saveCalibrationResults(Mat m, Mat d, Size imageSize, double err);
+    void saveCalibrationResults(Mat m, Mat d, Size imageSize, double err);
     QStringList getImagesFromFolder(QString folderPath);
     QString getImagesFolder();
     std::tuple<double, cv::Mat, cv::Mat> collectCalibrationObjectPoints(PointsCollectorBase &obj_pointsCollector, vector< vector<Point2f> > imagesPoints, Size imageSize);

@@ -16,7 +16,9 @@
 #include "Utils/Calibration/PointsCollectorChess.h"
 #include "Utils/Calibration/PointsCollectorCircles.h"
 #include "Utils/Calibration/CameraCalibration.h"
+#include "FieldOfViewWindow.h"
 #include "CalibrationExecutor.h"
+
 
 #include <string>
 #include <iostream>
@@ -24,6 +26,7 @@
 #include <memory>
 
 #ifndef QT_INCUDE
+#include <QAction>
 #include <QDebug>
 #include <QTimer>
 #include <QImage>
@@ -31,6 +34,7 @@
 #include <QVector>
 #include <QLabel>
 #include <QElapsedTimer>
+#include <QDateTime>
 #include <QPainter> 
 #include <QString>
 #include <QDir>
@@ -44,6 +48,7 @@
 #include <QTextCodec>
 #include <QLocale>
 #include <QTranslator>
+#include <QHeaderView>
 #endif
 
 #ifndef OPENCV_INCLUDE
@@ -53,18 +58,19 @@
 #include "opencv2/imgproc.hpp"
 #endif
 
-struct PatternConfig {
-public:
-    int calib_horizontal_val;
-    int calib_vertical_val;
-    double calib_size_val;
-public:
-    PatternConfig(int chv, int cvv, double csv) :
-    calib_horizontal_val(chv),
-    calib_vertical_val(cvv),
-    calib_size_val(csv) {
-    }
-};
+//struct PatternConfig {
+//public:
+//    int calib_horizontal_val;
+//    int calib_vertical_val;
+//    double calib_size_val;
+//public:
+//
+//    PatternConfig(int chv, int cvv, double csv) :
+//    calib_horizontal_val(chv),
+//    calib_vertical_val(cvv),
+//    calib_size_val(csv) {
+//    }
+//};
 
 class CalibrationExecutor : public QWidget {
     Q_OBJECT
@@ -72,15 +78,14 @@ public:
     CalibrationExecutor();
     virtual ~CalibrationExecutor();
     void openFolderWithIntrinsics(cv::Mat& m, cv::Mat& d, cv::Size& s);
-    int calculateFoV();
     int calibrate();
 private slots:
-    void calculateFieldOfView();
     void camerasCalibration();
     void selectCheckboxChessboard();
     void selectCheckboxCircle();
     void collectImagesFromSingleCamera();
     void updateFrame();
+    void takeSnapShootFromVideo();
 signals:
     void imageReady(cv::Mat);
 private:
@@ -88,11 +93,13 @@ private:
     std::unique_ptr<PointsCollectorBase> obj_pointsCollector;
     CameraCalibration* obj_cameraCalibration;
     std::vector<CameraViewer*> viewers;
-private:
     CameraViewer *obj_camViewer;
+    vector<cv::Mat> snapShootVec;
+private:
     cv::VideoCapture capture;
-    PatternConfig *patternConf;
+//    PatternConfig *patternConf;
     int counterImageFound = 0;
+    unsigned int counterImageSnapshoot = 0;
     QString folderPath;
     QStringList imagesFromFolder;
     vector< vector<Point2f> > imagesPoints;
@@ -103,6 +110,7 @@ private:
     std::string filename;
     std::tuple<double, cv::Mat, cv::Mat> calibrationError;
     QTimer *timer;
+    QStringList tableHeader;
 private:
     QVector<QString> getIniCameraConfigurations();
     void addVideoPathToComboBox();
@@ -114,6 +122,9 @@ private:
     void removeAllElementsFromLayout(QLayout* layout);
     void checkCurrentTemplateState();
     void setDefaultSettings();
+    void calibrationTableInfo(int id, int currentRow, QString status);
+    void calibrationTableHeader();
+    cv::Mat execFrame();
 };
 
 #endif /* _CALIBRATIONEXECUTOR_H */

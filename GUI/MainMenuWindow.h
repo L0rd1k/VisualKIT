@@ -15,8 +15,8 @@
 #define _MAINMENUWINDOW_H
 
 #include "ui_MainMenuWindow.h"
-#include "CalibrationExecutor.h"
-#include "Cameras/CameraViewer.h"
+#include "FieldOfViewWindow.h"
+#include "Calibration/SingleCameraCalibration.h"
 #include <QDebug>
 #include <memory>
 
@@ -26,10 +26,14 @@ public:
     MainMenuWindow();
     virtual ~MainMenuWindow();
 private:
-    void SelectUsedExtensions();
+    void removeAllElementsFromLayout(QLayout* layout);
 private:
     Ui::MainMenuWindow *widget = NULL;
-    CalibrationExecutor *obj_calibExecutor = NULL;
-    CameraViewer *obj_camViewer = NULL;
+    FieldOfViewWindow *obj_fov = NULL;
+    SingleCameraCalibration *obj_singleCalib = NULL;
+private slots:
+    void regime_CalculateFoV();
+    void regime_CalculateSingleCalib();
+    
 };
 #endif /* _MAINMENUWINDOW_H */

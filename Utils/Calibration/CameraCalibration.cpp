@@ -27,17 +27,13 @@ QStringList CameraCalibration::getImagesFromFolder(QString folderPath) {
     return files;
 }
 
-QString CameraCalibration::saveCalibrationResults(Mat m, Mat d, Size imageSize, double err) {
+void CameraCalibration::saveCalibrationResults(Mat m, Mat d, Size imageSize, double err) {
     std::string filename = folderPath.toStdString() + "/intrinsics.yml";
     FileStorage fs(filename, CV_STORAGE_WRITE);
     if (fs.isOpened()) {
         fs << "m" << m << "d" << d << "s" << imageSize << "err" << err;
-        oss << endl << "Матрица внутренних параметров : = " << endl << m << endl << endl <<
-                "Дисторсия = " << d << endl << endl <<
-                "Размер изображения = " << imageSize << endl << endl;
-                fs.release();
+        fs.release();
     }
-    return QString(oss.str().c_str());
 }
 
 std::tuple<double, cv::Mat, cv::Mat> CameraCalibration::collectCalibrationObjectPoints(PointsCollectorBase &obj_pointsCollector, vector< vector<Point2f> > imagesPoints, Size imageSize) {

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>634</width>
-    <height>500</height>
+    <width>1187</width>
+    <height>722</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,10 +15,67 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout"/>
+    <layout class="QVBoxLayout" name="vl_execution"/>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_Setter"/>
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="vl_regimes">
+     <item>
+      <widget class="QGroupBox" name="gb_regimes">
+       <property name="title">
+        <string>Режимы:</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QPushButton" name="pb_videostream">
+          <property name="text">
+           <string>Собрать изображения с видеопотока</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pb_fov">
+          <property name="text">
+           <string>Посчитать угол обзора камеры</string>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>25</width>
+            <height>25</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pb_singlecalib">
+          <property name="text">
+           <string>Откалибровать изображения</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

@@ -31,11 +31,21 @@ CameraViewer::~CameraViewer() {
 }
 
 cv::VideoCapture CameraViewer::startCapturing() {
+    capture.release();
+    
+    if(capture.isOpened()) {
+        qDebug() << "OPENED";
+    }
+    qDebug() << "START";
+    qDebug() << QString::fromStdString(path); 
     if (path == "0") {
+        qDebug() << "1";
         capture.open(0);
     } else {
+        qDebug() << "2";
         capture.open(path);
     }
+    qDebug() << "END";
 #define CAPTURE_PROP
 #ifndef CAPTURE_PROP
     qDebug() << "FPS : " << capture.get(cv::CAP_PROP_FPS);

@@ -19,7 +19,6 @@ utils::utils() {
 utils::~utils() {
 }
 
-
 cv::Mat convToGray(const cv::Mat& in) {
     cv::Mat out;
     if (in.channels() == 4)
