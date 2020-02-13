@@ -22,6 +22,9 @@
 #endif
 
 #include <QFileDialog>
+#include <QDebug>
+#include <QFile>
+
 #include <fstream>
 #include <string>
 #include <exception>

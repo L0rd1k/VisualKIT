@@ -80,7 +80,7 @@ public:
     void openFolderWithIntrinsics(cv::Mat& m, cv::Mat& d, cv::Size& s);
     int calibrate();
 private slots:
-    void camerasCalibration();
+//    void camerasCalibration();
     void selectCheckboxChessboard();
     void selectCheckboxCircle();
     void collectImagesFromSingleCamera();

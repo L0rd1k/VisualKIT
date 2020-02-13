@@ -5,9 +5,14 @@
       <logicalFolder name="Calibration"
                      displayName="CalibrationWidgets"
                      projectFiles="true">
+        <itemPath>GUI/Calibration/CamerasVideoCapture.cpp.cc</itemPath>
+        <itemPath>GUI/Calibration/CamerasVideoCapture.h</itemPath>
+        <itemPath>GUI/Calibration/CamerasVideoCapture.ui</itemPath>
         <itemPath>GUI/Calibration/SingleCameraCalibration.cpp.cc</itemPath>
         <itemPath>GUI/Calibration/SingleCameraCalibration.h</itemPath>
         <itemPath>GUI/Calibration/SingleCameraCalibration.ui</itemPath>
+        <itemPath>GUI/Calibration/ThreadableObject.cpp</itemPath>
+        <itemPath>GUI/Calibration/ThreadableObject.h</itemPath>
       </logicalFolder>
       <logicalFolder name="Cameras" displayName="Cameras" projectFiles="true">
         <itemPath>GUI/Cameras/CameraViewer.cpp.cc</itemPath>
@@ -173,6 +178,21 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="GUI/Calibration/CamerasVideoCapture.cpp.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="GUI/Calibration/CamerasVideoCapture.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="GUI/Calibration/CamerasVideoCapture.ui"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="GUI/Calibration/SingleCameraCalibration.cpp.cc"
             ex="false"
             tool="1"
@@ -187,6 +207,13 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="GUI/Calibration/ThreadableObject.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="GUI/Calibration/ThreadableObject.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="GUI/CalibrationExecutor.cpp.cc" ex="false" tool="1" flavor2="0">
       </item>
@@ -332,6 +359,21 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="GUI/Calibration/CamerasVideoCapture.cpp.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="GUI/Calibration/CamerasVideoCapture.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="GUI/Calibration/CamerasVideoCapture.ui"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="GUI/Calibration/SingleCameraCalibration.cpp.cc"
             ex="false"
             tool="1"
@@ -346,6 +388,13 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="GUI/Calibration/ThreadableObject.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="GUI/Calibration/ThreadableObject.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="GUI/CalibrationExecutor.cpp.cc" ex="false" tool="1" flavor2="0">
       </item>

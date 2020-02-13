@@ -6,17 +6,40 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>596</width>
-    <height>368</height>
+    <width>579</width>
+    <height>425</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>ImageViewer</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_Name">
-     <item>
+    <layout class="QFormLayout" name="formLayout_3">
+     <property name="fieldGrowthPolicy">
+      <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+     </property>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_ImageSize">
+       <property name="text">
+        <string>Image Size:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="label_ImagePath">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
       <widget class="QLabel" name="label_ImageName">
        <property name="text">
         <string>Image Name:</string>
@@ -26,25 +49,7 @@
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="QLabel" name="label_ImagePath">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_Size">
-     <item>
-      <widget class="QLabel" name="label_ImageSize">
-       <property name="text">
-        <string>Image Size:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
+     <item row="1" column="1">
       <widget class="QLabel" name="label_ImageSizeValue">
        <property name="text">
         <string/>
@@ -54,18 +59,47 @@
     </layout>
    </item>
    <item>
-    <widget class="QLabel" name="ImageLabel">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="ImageLabel">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>350</width>
+         <height>300</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QToolButton" name="btn_OpenFullImage">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>20</horstretch>
+       <verstretch>20</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
-       <width>300</width>
-       <height>300</height>
+       <width>0</width>
+       <height>0</height>
       </size>
      </property>
      <property name="text">
-      <string>TextLabel</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
+      <string>Full Image Size</string>
      </property>
     </widget>
    </item>

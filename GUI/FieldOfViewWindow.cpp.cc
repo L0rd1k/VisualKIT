@@ -37,9 +37,10 @@ void FieldOfViewWindow::calculateFieldOfView() {
 bool FieldOfViewWindow::openFolderWithIntrinsics(cv::Mat& matrix, cv::Mat& distortion, cv::Size& imgSize) {
     QString lineEdit_fileName = widget->le_filename->text();
     filename = folderPath.toStdString() + "/" + lineEdit_fileName.toStdString() + ".yml";
-    if (getFileSize(filename.c_str()) == 0) {
+    if (!QFile::exists(QString::fromStdString(filename)) || getFileSize(filename.c_str()) == 0) {
         widget->lbl_FOVResults->setStyleSheet("color : red ; font : 14pt ;");
         widget->lbl_FOVResults->setText("Файл пуст!");
+        return false;
     } else {
         try {
             cv::FileStorage fs(filename, CV_STORAGE_READ);

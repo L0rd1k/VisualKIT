@@ -27,6 +27,7 @@
 #include <QLabel>
 #include <QElapsedTimer>
 #include <QPainter> 
+#include <QMessageBox>
 #endif
 
 #ifndef OPENCV_INCLUDE
@@ -43,7 +44,10 @@ public:
     virtual ~ImageViewer();
 public slots:
     void setFrame(cv::Mat image, QString imagePath);
+    void openImageInFullSize();
 private:
+    cv::Mat activeImage;
+    QString activePath;
     Ui::ImageViewer *widget = NULL;
 };
 

@@ -13,6 +13,7 @@
 #include <algorithm>
 
 //Current function check one of the option for images fusion
+
 void checkImageTransformation() {
     ImageTransformation *obj_imageTransform = new ImageTransformation();
     delete obj_imageTransform;
@@ -31,7 +32,7 @@ int main(int argc, char *argv[]) {
 
     std::unique_ptr<MainMenuWindow> _obj_main(new MainMenuWindow());
     _obj_main->show();
-    //    checkImageTransformation(); // Current function check one of the option for images fusion (Will be implement in Qt Designer soon)
 
+    //        checkImageTransformation(); // Current function check one of the option for images fusion (Will be implement in Qt Designer soon)
     return app.exec();
 }

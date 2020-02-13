@@ -15,10 +15,12 @@
 
 #include "MainMenuWindow.h"
 
-MainMenuWindow::MainMenuWindow() : widget(new Ui::MainMenuWindow) {
+MainMenuWindow::MainMenuWindow() 
+: widget(new Ui::MainMenuWindow) {
     widget->setupUi(this);
     connect(widget->pb_fov, SIGNAL(clicked(bool)), this, SLOT(regime_CalculateFoV()));
     connect(widget->pb_singlecalib, SIGNAL(clicked(bool)), this, SLOT(regime_CalculateSingleCalib()));
+    connect(widget->pb_videostream, SIGNAL(clicked(bool)), this, SLOT(regime_CaptureStream()));
 }
 
 void MainMenuWindow::regime_CalculateFoV() {
@@ -31,6 +33,12 @@ void MainMenuWindow::regime_CalculateSingleCalib() {
     removeAllElementsFromLayout(widget->vl_execution);
     obj_singleCalib = new SingleCameraCalibration();
     widget->vl_execution->addWidget(obj_singleCalib, 10);
+}
+
+void MainMenuWindow::regime_CaptureStream() {
+    removeAllElementsFromLayout(widget->vl_execution);
+    obj_videoStream = new CamerasVideoCapture();
+    widget->vl_execution->addWidget(obj_videoStream, 10);
 }
 
 void MainMenuWindow::removeAllElementsFromLayout(QLayout* layout) {
@@ -49,5 +57,6 @@ void MainMenuWindow::removeAllElementsFromLayout(QLayout* layout) {
 MainMenuWindow::~MainMenuWindow() {
     delete widget;
     delete obj_fov;
+    delete obj_videoStream;
     delete obj_singleCalib;
 }

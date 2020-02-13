@@ -15,6 +15,7 @@
 #define _CAMERAVIEWER_H
 
 #include "ui_CameraViewer.h"
+#include "../Calibration/ThreadableObject.h"
 #include <cstdlib> 
 #include <ctime>
 

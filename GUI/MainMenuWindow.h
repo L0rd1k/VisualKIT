@@ -17,6 +17,8 @@
 #include "ui_MainMenuWindow.h"
 #include "FieldOfViewWindow.h"
 #include "Calibration/SingleCameraCalibration.h"
+#include "Calibration/CamerasVideoCapture.h"
+
 #include <QDebug>
 #include <memory>
 
@@ -31,9 +33,10 @@ private:
     Ui::MainMenuWindow *widget = NULL;
     FieldOfViewWindow *obj_fov = NULL;
     SingleCameraCalibration *obj_singleCalib = NULL;
+    CamerasVideoCapture *obj_videoStream = NULL;
 private slots:
     void regime_CalculateFoV();
     void regime_CalculateSingleCalib();
-    
+    void regime_CaptureStream();
 };
 #endif /* _MAINMENUWINDOW_H */

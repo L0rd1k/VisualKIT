@@ -81,9 +81,7 @@ void CalibrationExecutor::removeAllElementsFromLayout(QLayout* layout) {
 }
 // ---> DESIGN CHECKER - END
 
-
 // ---> VIDEO IMAGES EXTRACTION - BEGIN
-
 QVector<QString> CalibrationExecutor::getIniCameraConfigurations() {
     QVector<QString> vec_values;
     QSettings settings("./Settings/camerasConfig.ini", QSettings::IniFormat);
@@ -205,85 +203,82 @@ cv::Mat CalibrationExecutor::showTemplatePoints(cv::Mat &image, vector<Point2f> 
 //    }
 //}
 
-void CalibrationExecutor::calibrationTableInfo(int id, int currentRow, QString status) {
-    widget->tableWidget->setItem(currentRow, 0, new QTableWidgetItem("Загрузка -> " + QString::number(id + 1)));
-    widget->tableWidget->setItem(currentRow, 1, new QTableWidgetItem(QString(imagesFromFolder[id])));
-    widget->tableWidget->setItem(currentRow, 2, new QTableWidgetItem(status));
-}
+//void CalibrationExecutor::calibrationTableInfo(int id, int currentRow, QString status) {
+//    widget->tableWidget->setItem(currentRow, 0, new QTableWidgetItem("Загрузка -> " + QString::number(id + 1)));
+//    widget->tableWidget->setItem(currentRow, 1, new QTableWidgetItem(QString(imagesFromFolder[id])));
+//    widget->tableWidget->setItem(currentRow, 2, new QTableWidgetItem(status));
+//}
 
-void CalibrationExecutor::calibrationTableHeader() {
-    tableHeader << "ID" << "Имя файла" << "Статус";
-    widget->tableWidget->setColumnCount(3);
-    QHeaderView* header = widget->tableWidget->horizontalHeader();
-    header->setResizeMode(QHeaderView::Stretch);
-    widget->tableWidget->setHorizontalHeaderLabels(tableHeader);
-}
+//void CalibrationExecutor::calibrationTableHeader() {
+//    tableHeader << "ID" << "Имя файла" << "Статус";
+//    widget->tableWidget->setColumnCount(3);
+//    QHeaderView* header = widget->tableWidget->horizontalHeader();
+//    header->setResizeMode(QHeaderView::Stretch);
+//    widget->tableWidget->setHorizontalHeaderLabels(tableHeader);
+//}
 
-void CalibrationExecutor::camerasCalibration() {
-    timer->stop();
-
-
-
-    widget->tableWidget->setRowCount(0);
-    widget->scrollArea->setVisible(true);
-    obj_cameraCalibration = new CameraCalibration();
-    widget->listWidget->clear();
-    removeAllElementsFromLayout(widget->verticalLayout_Cameras);
-//    checkCurrentTemplateState();
-    folderPath = obj_cameraCalibration->getImagesFolder();
-    imagesFromFolder = obj_cameraCalibration->getImagesFromFolder(folderPath);
-    imagesPoints.clear();
-
-    if (imagesFromFolder.size() == 0) {
-        widget->label_HintResults->setStyleSheet("color : red ; font: 14pt;}");
-        return;
-    } else {
-        calibrationTableHeader();
-    }
-    for (int id = 0; id < imagesFromFolder.size(); id++) {
-        ImageViewer* obj_imageViewer = new ImageViewer();
-        int currentRow = widget->tableWidget->rowCount();
-        widget->tableWidget->setRowCount(currentRow + 1);
-        Mat image = imread(folderPath.toStdString() + "/" + imagesFromFolder[id].toStdString());
-        if (widget->comboBox_CameraBreed->currentIndex() == 1) {
-            bitwise_not(image, image);
-        }
-        if (image.size().width == 0 || image.size().height == 0) {
-            calibrationTableInfo(id, currentRow, QString("Точки не обнаружены!"));
-            widget->tableWidget->item(currentRow, 2)->setBackground(Qt::red);
-            continue;
-        } else {
-            imageSize = image.size();
-            auto points = obj_pointsCollector->collectFramePoints(image);
-            if (points.size() > 0) {
-                counterImageFound++;
-                calibrationTableInfo(id, currentRow, QString("Точки найдены!"));
-                widget->tableWidget->item(currentRow, 2)->setBackground(Qt::green);
-                if (image.cols > 0 && image.rows > 0 && points.size() > 0) {
-                    widget->verticalLayout_Cameras->addWidget(obj_imageViewer, 50);
-                    drawChessboardCorners(image, obj_pointsCollector->getChessboardSize(), points, true);
-                    cv::Mat imageWithCorners = image.clone();
-                    obj_imageViewer->setFrame(imageWithCorners, QString(imagesFromFolder[id]));
-                    imagesPoints.push_back(points);
-                }
-            } else {
-                calibrationTableInfo(id, currentRow, QString("Точки не обнаружены!"));
-                widget->tableWidget->item(currentRow, 2)->setBackground(Qt::red);
-            }
-        }
-    }
-    if (imagesPoints.size() == 0) {
-        widget->label_HintResults->setStyleSheet("color : red ; font: 14pt;}");
-        widget->label_HintResults->setText("Шаблон не был найден!");
-    } else {
-        widget->label_HintResults->setStyleSheet("color : green ; font: 14pt;}");
-        widget->label_HintResults->setText("Шаблон был найден : " + QString::number(counterImageFound) + "/" + QString::number(imagesFromFolder.size()));
-        counterImageFound = 0;
-        calibrationError = obj_cameraCalibration->collectCalibrationObjectPoints(*obj_pointsCollector, imagesPoints, imageSize);
-//        widget->listWidget->addItem(obj_cameraCalibration->saveCalibrationResults(std::get<1>(calibrationError), std::get<2>(calibrationError), imageSize, std::get<0>(calibrationError)));
-        widget->listWidget->addItem("Результаты калибровки : " + QString::number(std::get<0>(calibrationError)) + "\n");
-    }
-}
+//void CalibrationExecutor::camerasCalibration() {
+//    timer->stop();
+//    widget->tableWidget->setRowCount(0);
+//    widget->scrollArea->setVisible(true);
+//    obj_cameraCalibration = new CameraCalibration();
+//    widget->listWidget->clear();
+//    removeAllElementsFromLayout(widget->verticalLayout_Cameras);
+////    checkCurrentTemplateState();
+//    folderPath = obj_cameraCalibration->getImagesFolder();
+//    imagesFromFolder = obj_cameraCalibration->getImagesFromFolder(folderPath);
+//    imagesPoints.clear();
+//
+//    if (imagesFromFolder.size() == 0) {
+//        widget->label_HintResults->setStyleSheet("color : red ; font: 14pt;}");
+//        return;
+//    } else {
+//        calibrationTableHeader();
+//    }
+//    for (int id = 0; id < imagesFromFolder.size(); id++) {
+//        ImageViewer* obj_imageViewer = new ImageViewer();
+//        int currentRow = widget->tableWidget->rowCount();
+//        widget->tableWidget->setRowCount(currentRow + 1);
+//        Mat image = imread(folderPath.toStdString() + "/" + imagesFromFolder[id].toStdString());
+//        if (widget->comboBox_CameraBreed->currentIndex() == 1) {
+//            bitwise_not(image, image);
+//        }
+//        if (image.size().width == 0 || image.size().height == 0) {
+//            calibrationTableInfo(id, currentRow, QString("Точки не обнаружены!"));
+//            widget->tableWidget->item(currentRow, 2)->setBackground(Qt::red);
+//            continue;
+//        } else {
+//            imageSize = image.size();
+//            auto points = obj_pointsCollector->collectFramePoints(image);
+//            if (points.size() > 0) {
+//                counterImageFound++;
+//                calibrationTableInfo(id, currentRow, QString("Точки найдены!"));
+//                widget->tableWidget->item(currentRow, 2)->setBackground(Qt::green);
+//                if (image.cols > 0 && image.rows > 0 && points.size() > 0) {
+//                    widget->verticalLayout_Cameras->addWidget(obj_imageViewer, 50);
+//                    drawChessboardCorners(image, obj_pointsCollector->getChessboardSize(), points, true);
+//                    cv::Mat imageWithCorners = image.clone();
+//                    obj_imageViewer->setFrame(imageWithCorners, QString(imagesFromFolder[id]));
+//                    imagesPoints.push_back(points);
+//                }
+//            } else {
+//                calibrationTableInfo(id, currentRow, QString("Точки не обнаружены!"));
+//                widget->tableWidget->item(currentRow, 2)->setBackground(Qt::red);
+//            }
+//        }
+//    }
+//    if (imagesPoints.size() == 0) {
+//        widget->label_HintResults->setStyleSheet("color : red ; font: 14pt;}");
+//        widget->label_HintResults->setText("Шаблон не был найден!");
+//    } else {
+//        widget->label_HintResults->setStyleSheet("color : green ; font: 14pt;}");
+//        widget->label_HintResults->setText("Шаблон был найден : " + QString::number(counterImageFound) + "/" + QString::number(imagesFromFolder.size()));
+//        counterImageFound = 0;
+//        calibrationError = obj_cameraCalibration->collectCalibrationObjectPoints(*obj_pointsCollector, imagesPoints, imageSize);
+////        widget->listWidget->addItem(obj_cameraCalibration->saveCalibrationResults(std::get<1>(calibrationError), std::get<2>(calibrationError), imageSize, std::get<0>(calibrationError)));
+//        widget->listWidget->addItem("Результаты калибровки : " + QString::number(std::get<0>(calibrationError)) + "\n");
+//    }
+//}
 // ---> IMAGES CALIBRATION - END
 
 CalibrationExecutor::~CalibrationExecutor() {

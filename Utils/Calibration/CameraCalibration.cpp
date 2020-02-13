@@ -23,7 +23,7 @@ QString CameraCalibration::getImagesFolder() {
 
 QStringList CameraCalibration::getImagesFromFolder(QString folderPath) {
     QDir dir(folderPath);
-    files = dir.entryList(QStringList() << "*.jpg" << "*.jpeg" << "*.png", QDir::Files | QDir::NoDotAndDotDot);
+    files = dir.entryList(QStringList() << "*.bmp" << "*.jpg" << "*.jpeg" << "*.png", QDir::Files | QDir::NoDotAndDotDot);
     return files;
 }
 
