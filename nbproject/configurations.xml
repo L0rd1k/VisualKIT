@@ -11,10 +11,10 @@
         <itemPath>GUI/Calibration/SingleCameraCalibration.cpp.cc</itemPath>
         <itemPath>GUI/Calibration/SingleCameraCalibration.h</itemPath>
         <itemPath>GUI/Calibration/SingleCameraCalibration.ui</itemPath>
-        <itemPath>GUI/Calibration/ThreadableObject.cpp</itemPath>
-        <itemPath>GUI/Calibration/ThreadableObject.h</itemPath>
       </logicalFolder>
       <logicalFolder name="Cameras" displayName="Cameras" projectFiles="true">
+        <itemPath>GUI/Cameras/CameraCapture.cpp</itemPath>
+        <itemPath>GUI/Cameras/CameraCapture.h</itemPath>
         <itemPath>GUI/Cameras/CameraViewer.cpp.cc</itemPath>
         <itemPath>GUI/Cameras/CameraViewer.h</itemPath>
         <itemPath>GUI/Cameras/CameraViewer.ui</itemPath>
@@ -22,9 +22,6 @@
         <itemPath>GUI/Cameras/ImageViewer.h</itemPath>
         <itemPath>GUI/Cameras/ImageViewer.ui</itemPath>
       </logicalFolder>
-      <itemPath>GUI/CalibrationExecutor.cpp.cc</itemPath>
-      <itemPath>GUI/CalibrationExecutor.h</itemPath>
-      <itemPath>GUI/CalibrationExecutor.ui</itemPath>
       <itemPath>GUI/FieldOfViewWindow.cpp.cc</itemPath>
       <itemPath>GUI/FieldOfViewWindow.h</itemPath>
       <itemPath>GUI/FieldOfViewWindow.ui</itemPath>
@@ -208,18 +205,9 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="GUI/Calibration/ThreadableObject.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
+      <item path="GUI/Cameras/CameraCapture.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="GUI/Calibration/ThreadableObject.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="GUI/CalibrationExecutor.cpp.cc" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="GUI/CalibrationExecutor.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="GUI/CalibrationExecutor.ui" ex="false" tool="3" flavor2="0">
+      <item path="GUI/Cameras/CameraCapture.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="GUI/Cameras/CameraViewer.cpp.cc" ex="false" tool="1" flavor2="0">
       </item>
@@ -389,18 +377,9 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="GUI/Calibration/ThreadableObject.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
+      <item path="GUI/Cameras/CameraCapture.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="GUI/Calibration/ThreadableObject.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="GUI/CalibrationExecutor.cpp.cc" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="GUI/CalibrationExecutor.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="GUI/CalibrationExecutor.ui" ex="false" tool="3" flavor2="0">
+      <item path="GUI/Cameras/CameraCapture.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="GUI/Cameras/CameraViewer.cpp.cc" ex="false" tool="1" flavor2="0">
       </item>

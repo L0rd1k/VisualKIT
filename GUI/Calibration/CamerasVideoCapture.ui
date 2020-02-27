@@ -13,127 +13,119 @@
   <property name="windowTitle">
    <string>CamerasVideoCapture</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
-    <widget class="QGroupBox" name="groupBox_VideoCapture">
-     <property name="title">
-      <string>Захват видеопотока:</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_6">
-      <item>
-       <widget class="QTableWidget" name="tableWidget">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>200</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <layout class="QFormLayout" name="formLayout_CaptureParam">
-        <item row="0" column="0">
-         <widget class="QLabel" name="lbl_1">
-          <property name="text">
-           <string>Пути по умолчанию:</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QGroupBox" name="gb_Devices">
+       <property name="title">
+        <string>Доступные устройства:</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QTableWidget" name="tableWidget">
+          <property name="enabled">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
-         <widget class="QComboBox" name="comboBox_pathOptions">
-          <property name="maxVisibleItems">
-           <number>10</number>
-          </property>
-          <property name="insertPolicy">
-           <enum>QComboBox::InsertAtBottom</enum>
-          </property>
-         </widget>
+        <item>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Добавить путь : </string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="le_Path"/>
+          </item>
+          <item row="0" column="2">
+           <widget class="QToolButton" name="tb_AddPath">
+            <property name="text">
+             <string>+</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="lbl_2">
+        <item>
+         <widget class="QLabel" name="lbl_InfoLabel">
           <property name="text">
-           <string>Ввести свой путь :</string>
+           <string/>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
-        <item row="1" column="1">
-         <widget class="QLineEdit" name="lineEdit_videoIPPath"/>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="gb_Regimes">
+       <property name="title">
+        <string>GroupBox</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="QPushButton" name="btn_startStreaming">
+          <property name="text">
+           <string>Собрать изображения</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="toolButton_VideoRecord">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Запись видеопотока</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="toolButton_ScreenShot">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Захват кадра</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBox_RealTime">
+          <property name="text">
+           <string>Поиск калибровочного шаблона в RealTime</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="checkBox_RealTime">
-        <property name="text">
-         <string>Поиск калибровочного шаблона в RealTime</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_startStreaming">
-        <property name="text">
-         <string>Собрать изображения</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QGroupBox" name="groupBox">
-        <property name="title">
-         <string>Режимы</string>
-        </property>
-        <layout class="QFormLayout" name="formLayout">
-         <item row="2" column="1">
-          <widget class="QToolButton" name="toolButton_VideoRecord">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>Запись видеопотока</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
-          <widget class="QToolButton" name="toolButton_ScreenShot">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>Захват кадра</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item>
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-     </layout>
-    </widget>
+      </widget>
+     </item>
+    </layout>
    </item>
    <item>
     <widget class="QScrollArea" name="scrollArea">
@@ -145,13 +137,13 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>480</width>
-        <height>750</height>
+        <width>969</width>
+        <height>371</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout"/>
+        <layout class="QHBoxLayout" name="horizontalLayout"/>
        </item>
       </layout>
      </widget>

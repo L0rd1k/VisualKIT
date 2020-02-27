@@ -16,7 +16,9 @@
 
 #include "ui_CamerasVideoCapture.h"
 #include "../Cameras/CameraViewer.h"
+#include "../Cameras/CameraCapture.h"
 
+#include <memory>
 
 #include <QSettings>
 #include <QDebug>
@@ -39,14 +41,23 @@ public:
     virtual ~CamerasVideoCapture();
 private slots:
     void getCameraFrame();
+    void removeDevice();
+    void addNewDevice();
 private:
-    Ui::CamerasVideoCapture *widget = NULL;
-private:
+    Ui::CamerasVideoCapture *widget = nullptr;
+    QTableWidgetItem *iCheck = nullptr;
+    QVector<QThread*> threads;
+    QVector<QString> vec_values;
     QVector<QString> activePath;
+    QStringList keys;
+    QMap <int, QPushButton*> mapDelete;
+    QSettings* settings = nullptr;
+private:
     QVector<QString> getIniCameraConfigurations();
-    void addVideoPathToComboBox();
+    void addVideoPathToComboBox(QVector<QString> &iniConf);
     void removeAllElementsFromLayout(QLayout* layout);
     void setHeaderConfiguration();
+    void getCheckedCameras();
 };
 
 #endif /* _CAMERASVIDEOCAPTURE_H */

@@ -15,7 +15,6 @@
 #define _CAMERAVIEWER_H
 
 #include "ui_CameraViewer.h"
-#include "../Calibration/ThreadableObject.h"
 #include <cstdlib> 
 #include <ctime>
 
@@ -39,22 +38,12 @@
 class CameraViewer : public QWidget {
     Q_OBJECT
 public:
-    CameraViewer(std::string fpath);
+    CameraViewer();
     virtual ~CameraViewer();
-    cv::VideoCapture startCapturing();
-    void startStreaming();
-    cv::Mat getFrameFromCapture();
 public slots:
     void setFrame(cv::Mat);
-    void VideoStreaming();
 private:
     Ui::CameraViewer *widget = NULL;
-    QTimer *timer;
-    std::string path;
-    cv::VideoCapture capture;
-    cv::Mat frame;
-    QElapsedTimer _stateTimer;
-    int frameCounter = 0;
 };
 
 #endif /* _CAMERAVIEWER_H */

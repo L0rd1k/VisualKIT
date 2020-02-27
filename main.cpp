@@ -2,7 +2,6 @@
 #include <iostream>
 #include <memory>
 #include "GUI/MainMenuWindow.h"
-#include "GUI/CalibrationExecutor.h"
 #include "GUI/Cameras/CameraViewer.h"
 #include "Utils/ImageProcessing/ImageTransformation.h"
 #include "GUI/FieldOfViewWindow.h"
