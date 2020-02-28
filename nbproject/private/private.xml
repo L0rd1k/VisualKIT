@@ -6,6 +6,11 @@
     </data>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group name="temp"/>
+        <group name="temp">
+            <file>file:/home/ilya/NetBeansProjects/VisualKitStream/GUI/Calibration/CamerasVideoCapture.cpp.cc</file>
+            <file>file:/home/ilya/NetBeansProjects/VisualKitStream/main.cpp</file>
+            <file>file:/home/ilya/NetBeansProjects/VisualKitStream/GUI/Calibration/CamerasVideoCapture.h</file>
+            <file>file:/home/ilya/NetBeansProjects/VisualKitStream/GUI/MainMenuWindow.cpp.cc</file>
+        </group>
     </open-files>
 </project-private>

@@ -5,6 +5,7 @@
 #include "GUI/Cameras/CameraViewer.h"
 #include "Utils/ImageProcessing/ImageTransformation.h"
 #include "GUI/FieldOfViewWindow.h"
+#include "QRCodeWorker/QRDetector.h"
 
 #include <boost/array.hpp>
 #include <boost/lambda/lambda.hpp>
@@ -29,9 +30,11 @@ int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
     setTextCodec();
 
-    std::unique_ptr<MainMenuWindow> _obj_main(new MainMenuWindow());
-    _obj_main->show();
+    //    std::unique_ptr<MainMenuWindow> _obj_main(new MainMenuWindow());
+    //    _obj_main->show();
 
+    QRDetector qd;
+    qd.captureVideo();
     //        checkImageTransformation(); // Current function check one of the option for images fusion (Will be implement in Qt Designer soon)
     return app.exec();
 }

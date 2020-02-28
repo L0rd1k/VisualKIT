@@ -32,6 +32,8 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>QRCodeWorker/QRDetector.cpp</itemPath>
+      <itemPath>QRCodeWorker/QRDetector.h</itemPath>
     </logicalFolder>
     <logicalFolder name="NetWork" displayName="NetWork" projectFiles="true">
       <itemPath>NetWork/CommunicatingSocket.cpp</itemPath>
@@ -47,6 +49,10 @@
       <itemPath>NetWork/TCPSocket.h</itemPath>
       <itemPath>NetWork/UDPSocket.cpp</itemPath>
       <itemPath>NetWork/UDPSocket.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="QRCodeWorker"
+                   displayName="QRCodeWorker"
+                   projectFiles="true">
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -103,6 +109,7 @@
     <Elem>NetWork</Elem>
     <Elem>Utils</Elem>
     <Elem>Settings</Elem>
+    <Elem>QRCodeWorker</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -258,6 +265,10 @@
       <item path="NetWork/UDPSocket.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="NetWork/UDPSocket.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="QRCodeWorker/QRDetector.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="QRCodeWorker/QRDetector.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Settings/camerasConfig.ini" ex="false" tool="3" flavor2="0">
       </item>
@@ -430,6 +441,10 @@
       <item path="NetWork/UDPSocket.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="NetWork/UDPSocket.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="QRCodeWorker/QRDetector.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="QRCodeWorker/QRDetector.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Settings/camerasConfig.ini" ex="false" tool="3" flavor2="0">
       </item>
