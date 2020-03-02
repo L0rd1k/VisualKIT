@@ -26,6 +26,11 @@ void setTextCodec() {
     QTextCodec::setCodecForLocale(codec);
 }
 
+void examineQtCodeImage() {
+    QRDetector qd;
+    qd.captureVideo();
+}
+
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
     setTextCodec();
@@ -33,8 +38,8 @@ int main(int argc, char *argv[]) {
     //    std::unique_ptr<MainMenuWindow> _obj_main(new MainMenuWindow());
     //    _obj_main->show();
 
-    QRDetector qd;
-    qd.captureVideo();
-    //        checkImageTransformation(); // Current function check one of the option for images fusion (Will be implement in Qt Designer soon)
+
+    examineQtCodeImage();
+    //    checkImageTransformation(); // Current function check one of the option for images fusion (Will be implement in Qt Designer soon)
     return app.exec();
 }

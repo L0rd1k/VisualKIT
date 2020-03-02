@@ -35,6 +35,7 @@ private:
     void getMoments();
     void approximateContours(std::vector<cv::Point2f> contoursMassCenter);
     float EuclideanDistance(cv::Point2f pnt1, cv::Point2f pnt2);
+    float calculatePerpendicularPointsDistance(cv::Point2f medianFirst, cv::Point2f medianSecond, cv::Point2f diagonal);
 private:
     std::string capturePath;
     cv::Mat originalImage;
@@ -50,10 +51,11 @@ private:
     std::vector<cv::Point> pointsSequence;
     
     int counter = 0;
-    int marker;
-    int A, B, C;
-    float AB, BC, CA;
-
+    int marker = 0;
+    int A = 0, B = 0, C = 0;
+    int diagonalValue = 0;
+    int medianValueFirst = 0;
+    int medianValueSecond = 0;
 };
 
 #endif /* QRDETECTOR_H */

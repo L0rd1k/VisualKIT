@@ -32,8 +32,6 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>QRCodeWorker/QRDetector.cpp</itemPath>
-      <itemPath>QRCodeWorker/QRDetector.h</itemPath>
     </logicalFolder>
     <logicalFolder name="NetWork" displayName="NetWork" projectFiles="true">
       <itemPath>NetWork/CommunicatingSocket.cpp</itemPath>
@@ -53,6 +51,8 @@
     <logicalFolder name="QRCodeWorker"
                    displayName="QRCodeWorker"
                    projectFiles="true">
+      <itemPath>QRCodeWorker/QRDetector.cpp</itemPath>
+      <itemPath>QRCodeWorker/QRDetector.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"

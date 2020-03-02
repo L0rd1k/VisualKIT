@@ -62,6 +62,7 @@ void QRDetector::initializeQrValues() {
 
 void QRDetector::findAllContours() {
     cv::cvtColor(originalImage, grayImage, CV_RGB2GRAY);
+    cv::GaussianBlur(originalImage, originalImage, cv::Size(5, 5), 0);
     cv::Canny(grayImage, edgesImage, 100, 200, 3);
     cv::findContours(edgesImage, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
     cv::Mat drawing = cv::Mat::zeros(edgesImage.size(), CV_8UC3);
@@ -76,6 +77,15 @@ float QRDetector::EuclideanDistance(cv::Point2f pnt1, cv::Point2f pnt2) {
     return sqrt(pow(abs(pnt1.x - pnt2.x), 2) + pow(abs(pnt1.y - pnt2.y), 2));
 }
 
+float QRDetector::calculatePerpendicularPointsDistance(cv::Point2f medianFirst, cv::Point2f medianSecond, cv::Point2f diagonal) {
+    float vX = -((medianSecond.y - medianFirst.x) / (medianSecond.x - medianFirst.x));
+    float vY = 1.f;
+    float vZ = ((((medianSecond.y - medianFirst.y) / (medianSecond.x - medianFirst.x)) * diagonal.x) - diagonal.y);
+    float distance = (
+            vX * diagonal.x + (vY * diagonal.y) + vZ) / sqrt((vX * vX) + (vY * vY));
+    return distance;
+}
+
 void QRDetector::approximateContours(std::vector<cv::Point2f> contoursMassCenter) {
     cv::Mat approxDraw = cv::Mat::zeros(edgesImage.size(), CV_8UC3);
     for (unsigned int i = 0; i < contours.size(); i++) {
@@ -84,8 +94,6 @@ void QRDetector::approximateContours(std::vector<cv::Point2f> contoursMassCenter
             approximatedContours.push_back(pointsSequence);
             int currentIndex = i;
             int vCounter = 0;
-
-            // Check in case child contour is found
             while (hierarchy[currentIndex][2] != -1) {
                 currentIndex = hierarchy[currentIndex][2];
                 vCounter++;
@@ -111,7 +119,8 @@ void QRDetector::approximateContours(std::vector<cv::Point2f> contoursMassCenter
     }
 
     if (marker >= 3) {
-        std::map<unsigned int, float> distanceMap;
+        std::map<std::string, float> distanceMap;
+        std::string namesList[] = {"AB", "BC", "CA"};
         std::vector<std::pair<int, int> > contourPair{
             {A, B},
             {B, C},
@@ -119,16 +128,40 @@ void QRDetector::approximateContours(std::vector<cv::Point2f> contoursMassCenter
         cv::Scalar color = cv::Scalar(rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255));
         for (unsigned int i = 0; i < contourPair.size(); i++) {
             cv::line(originalImage, contoursMassCenter[contourPair[i].first], contoursMassCenter[contourPair[i].second], color, 3);
-            distanceMap.insert(std::make_pair(i, EuclideanDistance(contoursMassCenter[contourPair[i].first], contoursMassCenter[contourPair[i].second])));
+            distanceMap.insert(std::make_pair(namesList[i], EuclideanDistance(contoursMassCenter[contourPair[i].first], contoursMassCenter[contourPair[i].second])));
         }
-
         for (auto &i : distanceMap) {
             std::cout << i.first << " = " << i.second << " ";
         }
         std::cout << std::endl;
-    }
-    cv::imshow("Points", originalImage);
 
+        if (distanceMap.at("AB") > distanceMap.at("BC") && distanceMap.at("AB") > distanceMap.at("CA")) {
+            diagonalValue = C;
+            medianValueFirst = A;
+            medianValueSecond = B;
+        } else if (distanceMap.at("CA") > distanceMap.at("AB") && distanceMap.at("CA") > distanceMap.at("BC")) {
+            diagonalValue = B;
+            medianValueFirst = A;
+            medianValueSecond = C;
+        } else if (distanceMap.at("BC") > distanceMap.at("AB") && distanceMap.at("BC") > distanceMap.at("CA")) {
+            diagonalValue = A;
+            medianValueFirst = B;
+            medianValueSecond = C;
+        }
+    }
+
+    std::cout << "Diagonal Value : " << diagonalValue << " " <<
+            "Median Value First : " << medianValueFirst << " " <<
+            "Median Value Second : " << medianValueSecond << std::endl;
+
+
+
+
+
+
+
+
+    cv::imshow("Points", originalImage);
     if (approximatedContours.size() > 0) {
         for (unsigned int i = 0; i < approximatedContours.size(); i++) {
             cv::Scalar color = cv::Scalar(rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255));
