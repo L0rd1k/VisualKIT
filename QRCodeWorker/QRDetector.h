@@ -24,6 +24,13 @@
 #include <string>
 #include <map>
 
+enum class QROrientation {
+    NORTH = 0,
+    EAST = 1,
+    SOUTH = 2,
+    WEST = 3
+};
+
 class QRDetector {
 public:
     QRDetector();
@@ -36,9 +43,19 @@ private:
     void approximateContours(std::vector<cv::Point2f> contoursMassCenter);
     float EuclideanDistance(cv::Point2f pnt1, cv::Point2f pnt2);
     float calculatePerpendicularPointsDistance(cv::Point2f medianFirst, cv::Point2f medianSecond, cv::Point2f diagonal);
+    void slopeIdentification(std::map<std::string, float> distanceMap, std::vector<cv::Point2f> contoursMassCenter);
+    void drawApproximatedContours();
+    void resetCalculatedValues();
+    
+    float longestSideSlope(cv::Point2f point1, cv::Point2f point2, int& aligner);
+    void getMarksVerticies(std::vector<std::vector<cv::Point> > contours, int c_id, float slope, std::vector<cv::Point2f>& quad);
+    void updateCorner(cv::Point2f P, cv::Point2f ref, float& baseline, cv::Point2f& corner);
+    void updateCornerOr(int orientation, std::vector<cv::Point2f> IN, std::vector<cv::Point2f> &OUT);
+    float cross(cv::Point2f v1, cv::Point2f v2);
 private:
     std::string capturePath;
     cv::Mat originalImage;
+    cv::Mat testImage;
     cv::Mat grayImage;
     cv::Mat edgesImage;
     cv::Mat mark;
@@ -46,16 +63,17 @@ private:
     cv::RNG rng;
     std::vector<std::vector<cv::Point> > contours;
     std::vector<std::vector<cv::Point> > approximatedContours;
-
     std::vector<cv::Vec4i> hierarchy;
     std::vector<cv::Point> pointsSequence;
-    
     int counter = 0;
     int marker = 0;
     int A = 0, B = 0, C = 0;
-    int diagonalValue = 0;
-    int medianValueFirst = 0;
-    int medianValueSecond = 0;
+    int diagonalValue = 0, medianValueFirst = 0, medianValueSecond = 0;
+    float distance = 0.f, slope = 0.f;
+    int aligner = 0, orientation = 0;
+
+    unsigned int topValue = 0, rightValue = 0, bottomValue = 0;
+
 };
 
 #endif /* QRDETECTOR_H */
