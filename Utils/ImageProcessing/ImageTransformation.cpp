@@ -22,14 +22,12 @@ void ImageTransformation::drawPoints(Mat image, int x, int y) {
 vector<vector<cv::Point2f> > ImageTransformation::getFeaturePoints() {
     vector<vector<cv::Point2f> > rectangleVector;
     // IK - points
-    rectangleVector.push_back({cv::Point2f(432, 253),
-        cv::Point2f(576, 520),
-        cv::Point2f(605, 353),
-        cv::Point2f(454, 213),
-        cv::Point2f(28, 157),
-        cv::Point2f(300, 21),
-        cv::Point2f(659, 100),
-        cv::Point2f(348, 218)});
+    rectangleVector.push_back({
+        cv::Point2f(405, 219),
+        cv::Point2f(657, 203),
+        cv::Point2f(184, 216),
+        cv::Point2f(92, 96),
+    });
     //    rectangleVector.push_back({cv::Point2f(312, 257),
     //        cv::Point2f(453, 202),
     //        cv::Point2f(283, 208),
@@ -39,15 +37,12 @@ vector<vector<cv::Point2f> > ImageTransformation::getFeaturePoints() {
     //        cv::Point2f(247, 210),
     //        cv::Point2f(222, 190)});
     // TV
-    rectangleVector.push_back({cv::Point2f(552, 329),
-        cv::Point2f(714, 591),
-        cv::Point2f(740, 495),
-        cv::Point2f(575, 292),
-        cv::Point2f(105, 247),
-        cv::Point2f(406, 108),
-        cv::Point2f(808, 180),
-        cv::Point2f(464, 305)
-});
+    rectangleVector.push_back({
+        cv::Point2f(527, 307),
+        cv::Point2f(806, 289),
+        cv::Point2f(280, 306),
+        cv::Point2f(175, 185),
+    });
     //    rectangleVector.push_back({cv::Point2f(408, 362),
     //        cv::Point2f(573, 296),
     //        cv::Point2f(383, 303),
@@ -63,8 +58,8 @@ void ImageTransformation::getImageTranslation() {
     vector<cv::Mat> testImages = {
         //        cv::imread("/home/ilya/test2-ik.png"),
         //        cv::imread("/home/ilya/test2-tv.png")
-        cv::imread("/home/ilya/Изображения/Merging/ch1_2020.03.02_10.42.26.jpeg"),
-        cv::imread("/home/ilya/Изображения/Merging/ch0_2020.03.02_10.42.26.jpeg")
+        cv::imread("/home/ilya/oes2/screenshoots/screenshoot_1_2020-03-05 13:59:18.jpg"),
+        cv::imread("/home/ilya/oes2/screenshoots/screenshoot_0_2020-03-05 13:59:18.jpg")
     };
     vector<vector<cv::Point2f> > rectangleVector = getFeaturePoints();
     for (unsigned int iter = 0; iter < rectangleVector.size(); iter++) {
@@ -82,8 +77,8 @@ void ImageTransformation::getImageTranslation() {
 void ImageTransformation::overlayImages() {
     //    cv::Mat imageIK = cv::imread("/home/ilya/ls_1.png");
     //    cv::Mat imageTV = cv::imread("/home/ilya/ls_2.png");
-    cv::Mat imageIK = cv::imread("/home/ilya/Изображения/Merging/ch1_2020.03.02_10.42.26.jpeg");
-    cv::Mat imageTV = cv::imread("/home/ilya/Изображения/Merging/last.png");
+    cv::Mat imageIK = cv::imread("/home/ilya/oes2/screenshoots2/sdf.png");
+    cv::Mat imageTV = cv::imread("/home/ilya/oes2/screenshoots2/a1.png");
     OESFalseColor(imageIK, imageIK, HotMetal);
     Mat added_image;
     addWeighted(imageIK, 0.5, imageTV, 1, 0, added_image);

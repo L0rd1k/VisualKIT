@@ -190,7 +190,7 @@ void QRDetector::approximateContours(std::vector<cv::Point2f> contoursMassCenter
                         cv::Point2f(
                         (contoursMassCenter[contourPair[i].first].x + contoursMassCenter[contourPair[i].second].x) / 2,
                         (contoursMassCenter[contourPair[i].first].y + contoursMassCenter[contourPair[i].second].y) / 2),
-                        cv::FONT_HERSHEY_PLAIN, 1, cv::Scalar(255, 255, 255, 255));
+                        cv::FONT_HERSHEY_PLAIN, 1, cv::Scalar(255, 0, 255, 255));
                 distanceMap.insert(std::make_pair(namesList[i], EuclideanDistance(contoursMassCenter[contourPair[i].first], contoursMassCenter[contourPair[i].second])));
             }
             slopeIdentification(distanceMap, contoursMassCenter);
@@ -234,37 +234,37 @@ void QRDetector::approximateContours(std::vector<cv::Point2f> contoursMassCenter
 
                 std::vector<cv::Point2f> leftTop, rightTop, leftDown;
                 std::vector<cv::Point2f> tempLeftTop, tempRightTop, tempLeftDown;
-                cv::Point2f searchingValue;
+                cv::Point2f searchingPoint;
                 std::vector<cv::Point2f> source, destination;
                 cv::Mat warpingImage;
-                
-                
-                
-                std::vector<cv::Point2f> L, M, O, tempL, tempM, tempO;
-                cv::Point2f N;
-                std::vector<cv::Point2f> src, dst;
-                cv::Mat warp_matrix;
-                getMarksVerticies(contours, topValue, slope, tempL);
-                getMarksVerticies(contours, rightValue, slope, tempM);
-                getMarksVerticies(contours, bottomValue, slope, tempO);
-                updateCornerOr(orientation, tempL, L);
-                updateCornerOr(orientation, tempM, M);
-                updateCornerOr(orientation, tempO, O);
 
-                src.push_back(L[0]);
-                src.push_back(M[1]);
-                src.push_back(N);
-                src.push_back(O[3]);
+                getMarksVerticies(contours, topValue, slope, tempLeftTop);
+                getMarksVerticies(contours, rightValue, slope, tempRightTop);
+                getMarksVerticies(contours, bottomValue, slope, tempLeftDown);
 
-                dst.push_back(cv::Point2f(0, 0));
-                dst.push_back(cv::Point2f(qrValue.cols, 0));
-                dst.push_back(cv::Point2f(qrValue.cols, qrValue.rows));
-                dst.push_back(cv::Point2f(0, qrValue.rows));
+                verifyCornerPosition(orientation, tempLeftTop, leftTop);
+                verifyCornerPosition(orientation, tempRightTop, rightTop);
+                verifyCornerPosition(orientation, tempLeftDown, leftDown);
 
-                if (src.size() == 4 && dst.size() == 4) // Failsafe for WarpMatrix Calculation to have only 4 Points with src and dst
-                {
-                    warp_matrix = getPerspectiveTransform(src, dst);
-                    warpPerspective(originalImage, qrRawValue, warp_matrix, cv::Size(qrValue.cols, qrValue.rows));
+                findItersectionPoint(rightTop[1],rightTop[2],leftDown[3],leftDown[2],searchingPoint);
+
+
+
+                //TOP POINTS
+                source.push_back(leftTop[0]);
+                source.push_back(rightTop[1]);
+                source.push_back(searchingPoint);
+                source.push_back(leftDown[3]);
+
+
+                destination.push_back(cv::Point2f(0, 0));
+                destination.push_back(cv::Point2f(qrValue.cols, 0));
+                destination.push_back(cv::Point2f(qrValue.cols, qrValue.rows));
+                destination.push_back(cv::Point2f(0, qrValue.rows));
+
+                if (source.size() == 4 && destination.size() == 4) {
+                    warpingImage = cv::getPerspectiveTransform(source, destination);
+                    cv::warpPerspective(originalImage, qrRawValue, warpingImage, cv::Size(qrValue.cols, qrValue.rows));
                     cv::copyMakeBorder(qrRawValue, qrValue, 10, 10, 10, 10, cv::BORDER_CONSTANT, cv::Scalar(255, 255, 255));
                     cv::cvtColor(qrValue, qrGray, CV_RGB2GRAY);
                     cv::threshold(qrGray, qrThreshold, 127, 255, CV_THRESH_BINARY);
@@ -278,118 +278,151 @@ void QRDetector::approximateContours(std::vector<cv::Point2f> contoursMassCenter
 
     }
     imshow("Image", testImage);
+    imshow("Original Image", originalImage);
     cv::imshow("QR code", qrThreshold);
 }
 
-void QRDetector::getMarksVerticies(std::vector<std::vector<cv::Point> > contours, int c_id, float slope, std::vector<cv::Point2f>& quad) {
-    cv::Rect box;
-    box = cv::boundingRect(contours[c_id]);
+bool QRDetector::findItersectionPoint(cv::Point2f a1, cv::Point2f a2, cv::Point2f b1, cv::Point2f b2, cv::Point2f& intersection) {
+    cv::Point2f p = a1;
+    cv::Point2f q = b1;
+    cv::Point2f r(a2 - a1);
+    cv::Point2f s(b2 - b1);
+    if (cross(r, s) == 0) {
+        return false;
+    }
+    float t = cross(q - p, s) / cross(r, s);
+
+    intersection = p + t*r;
+    return true;
+}
+
+std::vector<cv::Point2f> QRDetector::getBoxPointsCoordinates(cv::Rect markerBox) {
+    std::vector<cv::Point2f> boxCoordinatesVector;
+    boxCoordinatesVector.push_back(cv::Point2f(markerBox.tl()));
+    boxCoordinatesVector.push_back(cv::Point2f(markerBox.br().x, markerBox.tl().y));
+    boxCoordinatesVector.push_back(cv::Point2f(markerBox.br()));
+    boxCoordinatesVector.push_back(cv::Point2f(markerBox.tl().x, markerBox.br().y));
+    return boxCoordinatesVector;
+}
+
+std::vector<cv::Point2f> QRDetector::getMiddleBoxPointsCoorinates(std::vector<cv::Point2f> boxCoordinatesVector) {
+    std::vector<cv::Point2f> qrCoordinatesVector;
+    qrCoordinatesVector.push_back(
+            cv::Point2f((boxCoordinatesVector[0].x + boxCoordinatesVector[1].x) / 2,
+            boxCoordinatesVector[0].y));
+    qrCoordinatesVector.push_back(
+            cv::Point2f(boxCoordinatesVector[1].y,
+            (boxCoordinatesVector[1].y + boxCoordinatesVector[2].y) / 2));
+    qrCoordinatesVector.push_back(
+            cv::Point2f((boxCoordinatesVector[2].x + boxCoordinatesVector[3].x) / 2,
+            boxCoordinatesVector[3].y));
+    qrCoordinatesVector.push_back(
+            cv::Point2f(boxCoordinatesVector[3].x,
+            (boxCoordinatesVector[3].y + boxCoordinatesVector[0].y) / 2));
+    return qrCoordinatesVector;
+}
+
+void QRDetector::getMarksVerticies(std::vector<std::vector<cv::Point> > contours, int contoursId, float slope, std::vector<cv::Point2f>& quadraticValue) {
+    cv::Rect markerBox = cv::boundingRect(contours[contoursId]);
+    cv::rectangle(testImage, markerBox, cv::Scalar(0, 255, 0));
+    std::vector<cv::Point2f> boxCoordinatesVector = getBoxPointsCoordinates(markerBox);
+    std::vector<cv::Point2f> qrCoordinatesVector = getMiddleBoxPointsCoorinates(boxCoordinatesVector);
     cv::Point2f M0, M1, M2, M3;
-    cv::Point2f A, B, C, D, W, X, Y, Z;
-    A = box.tl();
-    B.x = box.br().x;
-    B.y = box.tl().y;
-    C = box.br();
-    D.x = box.tl().x;
-    D.y = box.br().y;
-    W.x = (A.x + B.x) / 2;
-    W.y = A.y;
-    X.x = B.x;
-    X.y = (B.y + C.y) / 2;
-    Y.x = (C.x + D.x) / 2;
-    Y.y = C.y;
-    Z.x = D.x;
-    Z.y = (D.y + A.y) / 2;
+    std::vector<cv::Point2f> identificationVec = {M0, M1, M2, M3};
 
-    float dmax[4];
-    dmax[0] = 0.0;
-    dmax[1] = 0.0;
-    dmax[2] = 0.0;
-    dmax[3] = 0.0;
 
-    float pd1 = 0.0;
-    float pd2 = 0.0;
-
+    float dmax[4] = {0};
     if (slope > 5 || slope < -5) {
-
-        for (unsigned int i = 0; i < contours[c_id].size(); i++) {
-            pd1 = calculatePerpendicularPointsDistance(C, A, contours[c_id][i]); // Position of point w.r.t the diagonal AC 
-            pd2 = calculatePerpendicularPointsDistance(B, D, contours[c_id][i]); // Position of point w.r.t the diagonal BD
-
-            if ((pd1 >= 0.0) && (pd2 > 0.0)) {
-                updateCorner(contours[c_id][i], W, dmax[1], M1);
-            } else if ((pd1 > 0.0) && (pd2 <= 0.0)) {
-                updateCorner(contours[c_id][i], X, dmax[2], M2);
-            } else if ((pd1 <= 0.0) && (pd2 < 0.0)) {
-                updateCorner(contours[c_id][i], Y, dmax[3], M3);
-            } else if ((pd1 < 0.0) && (pd2 >= 0.0)) {
-                updateCorner(contours[c_id][i], Z, dmax[0], M0);
+        for (unsigned int i = 0; i < contours[contoursId].size(); i++) {
+            float perDistance_1 = calculatePerpendicularPointsDistance(boxCoordinatesVector[2], boxCoordinatesVector[0], contours[contoursId][i]);
+            float perDistance_2 = calculatePerpendicularPointsDistance(boxCoordinatesVector[1], boxCoordinatesVector[3], contours[contoursId][i]);
+            if ((perDistance_1 >= 0.0) && (perDistance_2 > 0.0)) {
+                updateCorner(contours[contoursId][i], qrCoordinatesVector[0], dmax[1], identificationVec[1]);
+            } else if ((perDistance_1 > 0.0) && (perDistance_2 <= 0.0)) {
+                updateCorner(contours[contoursId][i], qrCoordinatesVector[1], dmax[2], identificationVec[2]);
+            } else if ((perDistance_1 <= 0.0) && (perDistance_2 < 0.0)) {
+                updateCorner(contours[contoursId][i], qrCoordinatesVector[2], dmax[3], identificationVec[3]);
+            } else if ((perDistance_1 < 0.0) && (perDistance_2 >= 0.0)) {
+                updateCorner(contours[contoursId][i], qrCoordinatesVector[3], dmax[0], identificationVec[0]);
             } else
                 continue;
         }
     } else {
-        int halfx = (A.x + B.x) / 2;
-        int halfy = (A.y + D.y) / 2;
-
-        for (unsigned int i = 0; i < contours[c_id].size(); i++) {
-            if ((contours[c_id][i].x < halfx) && (contours[c_id][i].y <= halfy)) {
-                updateCorner(contours[c_id][i], C, dmax[2], M0);
-            } else if ((contours[c_id][i].x >= halfx) && (contours[c_id][i].y < halfy)) {
-                updateCorner(contours[c_id][i], D, dmax[3], M1);
-            } else if ((contours[c_id][i].x > halfx) && (contours[c_id][i].y >= halfy)) {
-                updateCorner(contours[c_id][i], A, dmax[0], M2);
-            } else if ((contours[c_id][i].x <= halfx) && (contours[c_id][i].y > halfy)) {
-                updateCorner(contours[c_id][i], B, dmax[1], M3);
+        int halfx = (boxCoordinatesVector[0].x + boxCoordinatesVector[1].x) / 2;
+        int halfy = (boxCoordinatesVector[0].y + boxCoordinatesVector[3].y) / 2;
+        for (unsigned int i = 0; i < contours[contoursId].size(); i++) {
+            if ((contours[contoursId][i].x < halfx) && (contours[contoursId][i].y <= halfy)) {
+                updateCorner(contours[contoursId][i], boxCoordinatesVector[2], dmax[2], identificationVec[0]);
+            } else if ((contours[contoursId][i].x >= halfx) && (contours[contoursId][i].y < halfy)) {
+                updateCorner(contours[contoursId][i], boxCoordinatesVector[3], dmax[3], identificationVec[1]);
+            } else if ((contours[contoursId][i].x > halfx) && (contours[contoursId][i].y >= halfy)) {
+                updateCorner(contours[contoursId][i], boxCoordinatesVector[0], dmax[0], identificationVec[2]);
+            } else if ((contours[contoursId][i].x <= halfx) && (contours[contoursId][i].y > halfy)) {
+                updateCorner(contours[contoursId][i], boxCoordinatesVector[1], dmax[1], identificationVec[3]);
             }
         }
     }
-
-    quad.push_back(M0);
-    quad.push_back(M1);
-    quad.push_back(M2);
-    quad.push_back(M3);
-
+    for (auto elem : identificationVec) {
+        //        cv::line(testImage, elem, elem, cv::Scalar(255, 255, 0), 3, 16);
+        quadraticValue.push_back(elem);
+    }
 }
 
 void QRDetector::updateCorner(cv::Point2f P, cv::Point2f ref, float& baseline, cv::Point2f& corner) {
     float temp_dist;
     temp_dist = EuclideanDistance(P, ref);
-
     if (temp_dist > baseline) {
         baseline = temp_dist; // The farthest distance is the new baseline
         corner = P; // P is now the farthest point
     }
-
 }
 
-void QRDetector::updateCornerOr(int orientation, std::vector<cv::Point2f> IN, std::vector<cv::Point2f> &OUT) {
+void QRDetector::verifyCornerPosition(int orientation, std::vector<cv::Point2f> IN, std::vector<cv::Point2f> &OUT) {
     cv::Point2f M0, M1, M2, M3;
+    std::vector<cv::Point2f> pointVec = {M0, M1, M2, M3};
+
+
+
+    //    switch(orientation) {
+    //        case 0:
+    //            break;
+    //        case 1:
+    //            break;
+    //        case 2:
+    //            break;
+    //        case 3:
+    //            break;
+    //        default:
+    //            
+    //    }
+    //    
+
     if (orientation == 0) {
-        M0 = IN[0];
-        M1 = IN[1];
-        M2 = IN[2];
-        M3 = IN[3];
+        pointVec[0] = IN[0];
+        pointVec[1] = IN[1];
+        pointVec[2] = IN[2];
+        pointVec[3] = IN[3];
     } else if (orientation == 1) {
-        M0 = IN[1];
-        M1 = IN[2];
-        M2 = IN[3];
-        M3 = IN[0];
+        pointVec[0] = IN[1];
+        pointVec[1] = IN[2];
+        pointVec[2] = IN[3];
+        pointVec[3] = IN[0];
     } else if (orientation == 2) {
-        M0 = IN[2];
-        M1 = IN[3];
-        M2 = IN[0];
-        M3 = IN[1];
+        pointVec[0] = IN[2];
+        pointVec[1] = IN[3];
+        pointVec[2] = IN[0];
+        pointVec[3] = IN[1];
     } else if (orientation == 3) {
-        M0 = IN[3];
-        M1 = IN[0];
-        M2 = IN[1];
-        M3 = IN[2];
+        pointVec[0] = IN[3];
+        pointVec[1] = IN[0];
+        pointVec[2] = IN[1];
+        pointVec[3] = IN[2];
     }
 
-    OUT.push_back(M0);
-    OUT.push_back(M1);
-    OUT.push_back(M2);
-    OUT.push_back(M3);
+    for (auto elem : pointVec) {
+        //        cv::line(testImage, elem, elem, cv::Scalar(255, 255, 0), 3, 16);
+        OUT.push_back(elem);
+    }
 }
 
 float QRDetector::cross(cv::Point2f v1, cv::Point2f v2) {
