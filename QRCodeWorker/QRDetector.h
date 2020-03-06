@@ -51,9 +51,9 @@ private:
     float longestSideSlope(cv::Point2f point1, cv::Point2f point2, int& aligner);
     void getMarksVerticies(std::vector<std::vector<cv::Point> > contours, int contoursId, float slope, std::vector<cv::Point2f>& quadraticValue);
     void updateCorner(cv::Point2f P, cv::Point2f ref, float& baseline, cv::Point2f& corner);
-    void verifyCornerPosition(int orientation, std::vector<cv::Point2f> IN, std::vector<cv::Point2f> &OUT);
-    float cross(cv::Point2f v1, cv::Point2f v2);
-    bool findItersectionPoint(cv::Point2f a1, cv::Point2f a2, cv::Point2f b1, cv::Point2f b2, cv::Point2f& intersection);
+    void verifyCornerPosition(int orientation, std::vector<cv::Point2f> IN, std::vector<cv::Point2f> &Result);
+    float calculateCrossedPoint(cv::Point2f v1, cv::Point2f v2);
+    bool findItersectionPoint(cv::Point2f pnt1, cv::Point2f pnt2, cv::Point2f pnt3, cv::Point2f pnt4, cv::Point2f& intersection);
 private:
     std::string capturePath;
     cv::Mat originalImage;

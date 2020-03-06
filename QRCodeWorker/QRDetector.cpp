@@ -82,7 +82,7 @@ void QRDetector::findAllContours() {
         cv::Scalar color = cv::Scalar(rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255));
         cv::drawContours(drawing, contours, i, color, 2, 8, hierarchy, 0, cv::Point());
     }
-    //    cv::imshow("Contours", drawing);
+    cv::imshow("Contours", drawing);
 }
 
 float QRDetector::EuclideanDistance(cv::Point2f pnt1, cv::Point2f pnt2) {
@@ -142,7 +142,7 @@ void QRDetector::drawApproximatedContours() {
             cv::Scalar color = cv::Scalar(rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255));
             cv::drawContours(approxDraw, approximatedContours, i, color, 2, 8, hierarchy, 0, cv::Point());
         }
-        //cv::imshow("Approximated Contours", approxDraw);
+        cv::imshow("Approximated Contours", approxDraw);
         approximatedContours.clear();
     }
 }
@@ -246,9 +246,7 @@ void QRDetector::approximateContours(std::vector<cv::Point2f> contoursMassCenter
                 verifyCornerPosition(orientation, tempRightTop, rightTop);
                 verifyCornerPosition(orientation, tempLeftDown, leftDown);
 
-                findItersectionPoint(rightTop[1],rightTop[2],leftDown[3],leftDown[2],searchingPoint);
-
-
+                findItersectionPoint(rightTop[1], rightTop[2], leftDown[3], leftDown[2], searchingPoint);
 
                 //TOP POINTS
                 source.push_back(leftTop[0]);
@@ -282,17 +280,16 @@ void QRDetector::approximateContours(std::vector<cv::Point2f> contoursMassCenter
     cv::imshow("QR code", qrThreshold);
 }
 
-bool QRDetector::findItersectionPoint(cv::Point2f a1, cv::Point2f a2, cv::Point2f b1, cv::Point2f b2, cv::Point2f& intersection) {
-    cv::Point2f p = a1;
-    cv::Point2f q = b1;
-    cv::Point2f r(a2 - a1);
-    cv::Point2f s(b2 - b1);
-    if (cross(r, s) == 0) {
+bool QRDetector::findItersectionPoint(cv::Point2f pnt1, cv::Point2f pnt2, cv::Point2f pnt3, cv::Point2f pnt4, cv::Point2f& intersection) {
+    cv::Point2f topRight = pnt1;
+    cv::Point2f leftBottom = pnt3;
+    cv::Point2f r(pnt2 - pnt1);
+    cv::Point2f s(pnt4 - pnt3);
+    if (calculateCrossedPoint(r, s) == 0)
         return false;
-    }
-    float t = cross(q - p, s) / cross(r, s);
-
-    intersection = p + t*r;
+    float t = calculateCrossedPoint(leftBottom - topRight, s) / calculateCrossedPoint(r, s);
+    intersection = topRight + t*r;
+    cv::line(testImage, intersection, intersection, cv::Scalar(0, 255, 255), 7);
     return true;
 }
 
@@ -377,54 +374,42 @@ void QRDetector::updateCorner(cv::Point2f P, cv::Point2f ref, float& baseline, c
     }
 }
 
-void QRDetector::verifyCornerPosition(int orientation, std::vector<cv::Point2f> IN, std::vector<cv::Point2f> &OUT) {
+void QRDetector::verifyCornerPosition(int orientation, std::vector<cv::Point2f> IN, std::vector<cv::Point2f> &Result) {
     cv::Point2f M0, M1, M2, M3;
     std::vector<cv::Point2f> pointVec = {M0, M1, M2, M3};
-
-
-
-    //    switch(orientation) {
-    //        case 0:
-    //            break;
-    //        case 1:
-    //            break;
-    //        case 2:
-    //            break;
-    //        case 3:
-    //            break;
-    //        default:
-    //            
-    //    }
-    //    
-
-    if (orientation == 0) {
-        pointVec[0] = IN[0];
-        pointVec[1] = IN[1];
-        pointVec[2] = IN[2];
-        pointVec[3] = IN[3];
-    } else if (orientation == 1) {
-        pointVec[0] = IN[1];
-        pointVec[1] = IN[2];
-        pointVec[2] = IN[3];
-        pointVec[3] = IN[0];
-    } else if (orientation == 2) {
-        pointVec[0] = IN[2];
-        pointVec[1] = IN[3];
-        pointVec[2] = IN[0];
-        pointVec[3] = IN[1];
-    } else if (orientation == 3) {
-        pointVec[0] = IN[3];
-        pointVec[1] = IN[0];
-        pointVec[2] = IN[1];
-        pointVec[3] = IN[2];
+    switch (orientation) {
+        case 0:
+            pointVec[0] = IN[0];
+            pointVec[1] = IN[1];
+            pointVec[2] = IN[2];
+            pointVec[3] = IN[3];
+            break;
+        case 1:
+            pointVec[0] = IN[1];
+            pointVec[1] = IN[2];
+            pointVec[2] = IN[3];
+            pointVec[3] = IN[0];
+            break;
+        case 2:
+            pointVec[0] = IN[2];
+            pointVec[1] = IN[3];
+            pointVec[2] = IN[0];
+            pointVec[3] = IN[1];
+            break;
+        case 3:
+            pointVec[0] = IN[3];
+            pointVec[1] = IN[0];
+            pointVec[2] = IN[1];
+            pointVec[3] = IN[2];
+            break;
+        default:
+            break;
     }
-
     for (auto elem : pointVec) {
-        //        cv::line(testImage, elem, elem, cv::Scalar(255, 255, 0), 3, 16);
-        OUT.push_back(elem);
+        Result.push_back(elem);
     }
 }
 
-float QRDetector::cross(cv::Point2f v1, cv::Point2f v2) {
+float QRDetector::calculateCrossedPoint(cv::Point2f v1, cv::Point2f v2) {
     return v1.x * v2.y - v1.y * v2.x;
 }
