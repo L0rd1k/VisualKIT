@@ -77,12 +77,11 @@ void QRDetector::findAllContours() {
     cv::GaussianBlur(originalImage, originalImage, cv::Size(5, 5), 0);
     cv::Canny(grayImage, edgesImage, 100, 200, 3);
     cv::findContours(edgesImage, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
-    cv::Mat drawing = cv::Mat::zeros(edgesImage.size(), CV_8UC3);
+    drawing = cv::Mat::zeros(edgesImage.size(), CV_8UC3);
     for (unsigned int i = 0; i < contours.size(); i++) {
         cv::Scalar color = cv::Scalar(rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255));
         cv::drawContours(drawing, contours, i, color, 2, 8, hierarchy, 0, cv::Point());
     }
-    cv::imshow("Contours", drawing);
 }
 
 float QRDetector::EuclideanDistance(cv::Point2f pnt1, cv::Point2f pnt2) {
@@ -136,13 +135,12 @@ void QRDetector::slopeIdentification(std::map<std::string, float> distanceMap, s
 }
 
 void QRDetector::drawApproximatedContours() {
-    cv::Mat approxDraw = cv::Mat::zeros(edgesImage.size(), CV_8UC3);
+    approxDraw = cv::Mat::zeros(edgesImage.size(), CV_8UC3);
     if (approximatedContours.size() > 0) {
         for (unsigned int i = 0; i < approximatedContours.size(); i++) {
             cv::Scalar color = cv::Scalar(rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255));
             cv::drawContours(approxDraw, approximatedContours, i, color, 2, 8, hierarchy, 0, cv::Point());
         }
-        cv::imshow("Approximated Contours", approxDraw);
         approximatedContours.clear();
     }
 }
@@ -275,9 +273,9 @@ void QRDetector::approximateContours(std::vector<cv::Point2f> contoursMassCenter
         }
 
     }
-    imshow("Image", testImage);
-    imshow("Original Image", originalImage);
-    cv::imshow("QR code", qrThreshold);
+    cv::Mat img1 = imgOpr.tieImagesHorizontaly(testImage, originalImage);
+    cv::Mat img2 = imgOpr.tieImagesHorizontaly(drawing, approxDraw);
+    cv::imshow("Image", imgOpr.tieImagesVerticaly(img1, img2));
 }
 
 bool QRDetector::findItersectionPoint(cv::Point2f pnt1, cv::Point2f pnt2, cv::Point2f pnt3, cv::Point2f pnt4, cv::Point2f& intersection) {
@@ -326,8 +324,6 @@ void QRDetector::getMarksVerticies(std::vector<std::vector<cv::Point> > contours
     std::vector<cv::Point2f> qrCoordinatesVector = getMiddleBoxPointsCoorinates(boxCoordinatesVector);
     cv::Point2f M0, M1, M2, M3;
     std::vector<cv::Point2f> identificationVec = {M0, M1, M2, M3};
-
-
     float dmax[4] = {0};
     if (slope > 5 || slope < -5) {
         for (unsigned int i = 0; i < contours[contoursId].size(); i++) {

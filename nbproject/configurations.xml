@@ -81,6 +81,8 @@
       <logicalFolder name="ImageProcessing"
                      displayName="ImageProcessing"
                      projectFiles="true">
+        <itemPath>Utils/ImageProcessing/ImageOperations.cpp</itemPath>
+        <itemPath>Utils/ImageProcessing/ImageOperations.h</itemPath>
         <itemPath>Utils/ImageProcessing/ImageTransformation.cpp</itemPath>
         <itemPath>Utils/ImageProcessing/ImageTransformation.h</itemPath>
       </logicalFolder>
@@ -315,6 +317,16 @@
       </item>
       <item path="Utils/FieldOfViewChecker.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Utils/ImageProcessing/ImageOperations.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Utils/ImageProcessing/ImageOperations.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="Utils/ImageProcessing/ImageTransformation.cpp"
             ex="false"
             tool="1"
@@ -490,6 +502,16 @@
       <item path="Utils/FieldOfViewChecker.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Utils/FieldOfViewChecker.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Utils/ImageProcessing/ImageOperations.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Utils/ImageProcessing/ImageOperations.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="Utils/ImageProcessing/ImageTransformation.cpp"
             ex="false"

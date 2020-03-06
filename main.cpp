@@ -34,12 +34,9 @@ void examineQtCodeImage() {
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
     setTextCodec();
-
-    //    std::unique_ptr<MainMenuWindow> _obj_main(new MainMenuWindow());
-    //    _obj_main->show();
-
-
+    //std::unique_ptr<MainMenuWindow> _obj_main(new MainMenuWindow());
+    //obj_main->show();
     examineQtCodeImage();
-    //    checkImageTransformation(); // Current function check one of the option for images fusion (Will be implement in Qt Designer soon)
+    //checkImageTransformation(); // Current function check one of the option for images fusion (Will be implement in Qt Designer soon)
     return app.exec();
 }

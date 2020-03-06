@@ -17,6 +17,7 @@
 #include "opencv2/highgui.hpp"
 #include "opencv2/core.hpp"
 #include "opencv2/imgproc.hpp"
+#include "Utils/ImageProcessing/ImageOperations.h"
 
 #include <iostream>
 #include <vector>
@@ -55,6 +56,7 @@ private:
     float calculateCrossedPoint(cv::Point2f v1, cv::Point2f v2);
     bool findItersectionPoint(cv::Point2f pnt1, cv::Point2f pnt2, cv::Point2f pnt3, cv::Point2f pnt4, cv::Point2f& intersection);
 private:
+    ImageOperations imgOpr;
     std::string capturePath;
     cv::Mat originalImage;
     cv::Mat testImage;
@@ -63,6 +65,8 @@ private:
     cv::Mat mark;
     cv::Mat qrRawValue, qrValue, qrGray, qrThreshold;
     cv::RNG rng;
+    cv::Mat drawing;
+    cv::Mat approxDraw;
     std::vector<std::vector<cv::Point> > contours;
     std::vector<std::vector<cv::Point> > approximatedContours;
     std::vector<cv::Vec4i> hierarchy;
@@ -73,9 +77,7 @@ private:
     int diagonalValue = 0, medianValueFirst = 0, medianValueSecond = 0;
     float distance = 0.f, slope = 0.f;
     int aligner = 0, orientation = 0;
-
     unsigned int topValue = 0, rightValue = 0, bottomValue = 0;
-
 };
 
 #endif /* QRDETECTOR_H */
