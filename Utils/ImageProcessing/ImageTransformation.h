@@ -34,8 +34,11 @@ private:
     void drawRectanglePoints(cv::Mat image);
     void getImageTranslation();
     void overlayImages();
+    void overlayImagesSobel();
     void drawPoints(Mat image, int x, int y);
     void getSiftFeatures();
+    cv::Mat toGray(const Mat& img);
+    cv::Mat calcSobel(const Mat& img, double kx, double ky, int ksize, double scale, double delta);
     vector<vector<cv::Point2f> > getFeaturePoints();
 };
 

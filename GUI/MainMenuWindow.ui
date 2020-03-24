@@ -59,6 +59,13 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QPushButton" name="pb_datasetmarkup">
+          <property name="text">
+           <string>Разметить DataSet для YOLO</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
      </item>

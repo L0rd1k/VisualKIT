@@ -18,6 +18,7 @@
 #include "FieldOfViewWindow.h"
 #include "Calibration/SingleCameraCalibration.h"
 #include "Calibration/CamerasVideoCapture.h"
+#include "../Augmentation/DataSetMarkUp.h"
 
 #include <QDebug>
 #include <memory>
@@ -34,9 +35,11 @@ private:
     FieldOfViewWindow *obj_fov = NULL;
     SingleCameraCalibration *obj_singleCalib = NULL;
     CamerasVideoCapture *obj_videoStream = NULL;
+    DataSetMarkUp *obj_markUp = NULL;
 private slots:
     void regime_CalculateFoV();
     void regime_CalculateSingleCalib();
     void regime_CaptureStream();
+    void regime_MarkUp();
 };
 #endif /* _MAINMENUWINDOW_H */

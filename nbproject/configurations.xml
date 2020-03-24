@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="100">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="Augmentation"
+                   displayName="Augmentation"
+                   projectFiles="true">
+      <itemPath>Augmentation/DataSetMarkUp.cpp.cc</itemPath>
+      <itemPath>Augmentation/DataSetMarkUp.h</itemPath>
+      <itemPath>Augmentation/DataSetMarkUp.ui</itemPath>
+    </logicalFolder>
     <logicalFolder name="GUI" displayName="GUI" projectFiles="true">
       <logicalFolder name="Calibration"
                      displayName="CalibrationWidgets"
@@ -32,6 +39,16 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="Marker" displayName="Marker" projectFiles="true">
+      <itemPath>Marker/DatasetImagesList.cpp</itemPath>
+      <itemPath>Marker/DatasetImagesList.h</itemPath>
+      <itemPath>Marker/DatasetList.cpp</itemPath>
+      <itemPath>Marker/DatasetList.h</itemPath>
+      <itemPath>Marker/DatasetMaker.cpp</itemPath>
+      <itemPath>Marker/DatasetMaker.h</itemPath>
+      <itemPath>Marker/DatasetMarker.cpp</itemPath>
+      <itemPath>Marker/DatasetMarker.h</itemPath>
     </logicalFolder>
     <logicalFolder name="NetWork" displayName="NetWork" projectFiles="true">
       <itemPath>NetWork/CommunicatingSocket.cpp</itemPath>
@@ -112,6 +129,8 @@
     <Elem>Utils</Elem>
     <Elem>Settings</Elem>
     <Elem>QRCodeWorker</Elem>
+    <Elem>Augmentation</Elem>
+    <Elem>Marker</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -184,6 +203,12 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="Augmentation/DataSetMarkUp.cpp.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Augmentation/DataSetMarkUp.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Augmentation/DataSetMarkUp.ui" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="GUI/Calibration/CamerasVideoCapture.cpp.cc"
             ex="false"
             tool="1"
@@ -241,6 +266,22 @@
       <item path="GUI/MainMenuWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="GUI/MainMenuWindow.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Marker/DatasetImagesList.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Marker/DatasetImagesList.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Marker/DatasetList.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Marker/DatasetList.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Marker/DatasetMaker.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Marker/DatasetMaker.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Marker/DatasetMarker.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Marker/DatasetMarker.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="NetWork/CommunicatingSocket.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -370,6 +411,12 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="Augmentation/DataSetMarkUp.cpp.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Augmentation/DataSetMarkUp.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Augmentation/DataSetMarkUp.ui" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="GUI/Calibration/CamerasVideoCapture.cpp.cc"
             ex="false"
             tool="1"
@@ -427,6 +474,22 @@
       <item path="GUI/MainMenuWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="GUI/MainMenuWindow.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Marker/DatasetImagesList.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Marker/DatasetImagesList.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Marker/DatasetList.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Marker/DatasetList.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Marker/DatasetMaker.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Marker/DatasetMaker.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Marker/DatasetMarker.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Marker/DatasetMarker.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="NetWork/CommunicatingSocket.cpp" ex="false" tool="1" flavor2="0">
       </item>

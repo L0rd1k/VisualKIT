@@ -15,12 +15,13 @@
 
 #include "MainMenuWindow.h"
 
-MainMenuWindow::MainMenuWindow() 
+MainMenuWindow::MainMenuWindow()
 : widget(new Ui::MainMenuWindow) {
     widget->setupUi(this);
     connect(widget->pb_fov, SIGNAL(clicked(bool)), this, SLOT(regime_CalculateFoV()));
     connect(widget->pb_singlecalib, SIGNAL(clicked(bool)), this, SLOT(regime_CalculateSingleCalib()));
     connect(widget->pb_videostream, SIGNAL(clicked(bool)), this, SLOT(regime_CaptureStream()));
+    connect(widget->pb_datasetmarkup, SIGNAL(clicked(bool)), this, SLOT(regime_MarkUp()));
 }
 
 void MainMenuWindow::regime_CalculateFoV() {
@@ -41,6 +42,12 @@ void MainMenuWindow::regime_CaptureStream() {
     widget->vl_execution->addWidget(obj_videoStream, 10);
 }
 
+void MainMenuWindow::regime_MarkUp() {
+    removeAllElementsFromLayout(widget->vl_execution);
+    obj_markUp = new DataSetMarkUp();
+    widget->vl_execution->addWidget(obj_markUp, 10);
+}
+
 void MainMenuWindow::removeAllElementsFromLayout(QLayout* layout) {
     QLayoutItem* child;
     while (layout->count() != 0) {
@@ -59,4 +66,5 @@ MainMenuWindow::~MainMenuWindow() {
     delete obj_fov;
     delete obj_videoStream;
     delete obj_singleCalib;
+    delete obj_markUp;
 }

@@ -122,7 +122,6 @@ void QRDetector::slopeIdentification(std::map<std::string, float> distanceMap, s
         medianValueFirst = B;
         medianValueSecond = C;
     }
-
     // Draw slope(diagonal) line
     cv::line(testImage, contoursMassCenter[medianValueFirst], contoursMassCenter[medianValueSecond], cv::Scalar(0, 255, 0), 1, 16);
     // Draw distance(perpendicular) line
@@ -265,29 +264,35 @@ void QRDetector::approximateContours(std::vector<cv::Point2f> contoursMassCenter
                     cv::cvtColor(qrValue, qrGray, CV_RGB2GRAY);
                     cv::threshold(qrGray, qrThreshold, 127, 255, CV_THRESH_BINARY);
                 }
-                //Draw contours on the image
                 cv::drawContours(originalImage, contours, topValue, cv::Scalar(255, 200, 0), 2, 8, hierarchy, 0);
                 cv::drawContours(originalImage, contours, rightValue, cv::Scalar(0, 0, 255), 2, 8, hierarchy, 0);
                 cv::drawContours(originalImage, contours, bottomValue, cv::Scalar(255, 0, 100), 2, 8, hierarchy, 0);
             }
         }
-
     }
     cv::Mat img1 = imgOpr.tieImagesHorizontaly(testImage, originalImage);
     cv::Mat img2 = imgOpr.tieImagesHorizontaly(drawing, approxDraw);
-    cv::imshow("Image", imgOpr.tieImagesVerticaly(img1, img2));
+    cv::Mat resultImg = imgOpr.tieImagesVerticaly(img1, img2);
+    cv::imshow("Image", resultImg);
 }
 
 bool QRDetector::findItersectionPoint(cv::Point2f pnt1, cv::Point2f pnt2, cv::Point2f pnt3, cv::Point2f pnt4, cv::Point2f& intersection) {
     cv::Point2f topRight = pnt1;
     cv::Point2f leftBottom = pnt3;
+    
+    cv::line(testImage, pnt1, pnt1, cv::Scalar(0, 0, 0), 7);
+    cv::line(testImage, pnt3, pnt3, cv::Scalar(0, 0, 0), 7);
+    
+    cv::line(testImage, pnt2, pnt2, cv::Scalar(0, 0, 0), 7);
+    cv::line(testImage, pnt4, pnt4, cv::Scalar(0, 0, 0), 7);
+    
     cv::Point2f r(pnt2 - pnt1);
     cv::Point2f s(pnt4 - pnt3);
     if (calculateCrossedPoint(r, s) == 0)
         return false;
     float t = calculateCrossedPoint(leftBottom - topRight, s) / calculateCrossedPoint(r, s);
     intersection = topRight + t*r;
-    cv::line(testImage, intersection, intersection, cv::Scalar(0, 255, 255), 7);
+    cv::line(testImage, intersection, intersection, cv::Scalar(0, 0, 255), 7);
     return true;
 }
 
@@ -356,7 +361,6 @@ void QRDetector::getMarksVerticies(std::vector<std::vector<cv::Point> > contours
         }
     }
     for (auto elem : identificationVec) {
-        //        cv::line(testImage, elem, elem, cv::Scalar(255, 255, 0), 3, 16);
         quadraticValue.push_back(elem);
     }
 }
@@ -365,8 +369,8 @@ void QRDetector::updateCorner(cv::Point2f P, cv::Point2f ref, float& baseline, c
     float temp_dist;
     temp_dist = EuclideanDistance(P, ref);
     if (temp_dist > baseline) {
-        baseline = temp_dist; // The farthest distance is the new baseline
-        corner = P; // P is now the farthest point
+        baseline = temp_dist;
+        corner = P;
     }
 }
 

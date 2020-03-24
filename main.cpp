@@ -7,10 +7,10 @@
 #include "GUI/FieldOfViewWindow.h"
 #include "QRCodeWorker/QRDetector.h"
 
-#include <boost/array.hpp>
-#include <boost/lambda/lambda.hpp>
-#include <iterator>
-#include <algorithm>
+//#include <boost/array.hpp>
+//#include <boost/lambda/lambda.hpp>
+//#include <iterator>
+//#include <algorithm>
 
 //Current function check one of the option for images fusion
 
@@ -34,9 +34,20 @@ void examineQtCodeImage() {
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
     setTextCodec();
-    //std::unique_ptr<MainMenuWindow> _obj_main(new MainMenuWindow());
-    //obj_main->show();
-    examineQtCodeImage();
-    //checkImageTransformation(); // Current function check one of the option for images fusion (Will be implement in Qt Designer soon)
+    
+
+    //    DatasetMaker win("/home/ilya/Изображения/DataSets/VoskresenskRunway/", 512);
+    //    win.setMinimumSize(400, 200);
+    //    win.show();
+
+    std::unique_ptr<MainMenuWindow> _obj_main(new MainMenuWindow());
+    _obj_main->show();
+
+
+    // 1.  Detect QR code
+    //examineQtCodeImage(); 
+
+    // 2. Current function check one of the option for images fusion (Will be implement in Qt Designer soon)
+    //checkImageTransformation();
     return app.exec();
 }

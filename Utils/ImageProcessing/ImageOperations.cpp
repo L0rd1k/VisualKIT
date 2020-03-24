@@ -57,16 +57,13 @@ cv::Mat ImageOperations::tieImagesVerticaly(const cv::Mat& img1, const cv::Mat& 
     cv::Mat tempImg1;
     cv::Mat tempImg2;
     int type = concatinatingMat(img1, img2, tempImg1, tempImg2);
-
     if (tempImg1.empty()) {
         return tempImg2;
     } else if (tempImg2.empty()) {
         return tempImg1;
     }
-
     cv::Size size(cv::max(tempImg1.cols, tempImg2.cols), tempImg1.rows + tempImg2.rows);
     cv::Mat img = cv::Mat::zeros(size, type);
-
     cv::Rect roi1(cv::Point(0, 0), tempImg1.size());
     cv::Rect roi2(cv::Point(0, tempImg1.rows), tempImg2.size());
     tempImg1.copyTo(img(roi1));
