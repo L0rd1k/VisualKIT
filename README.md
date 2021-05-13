@@ -1,5 +1,5 @@
 # VisualKIT
-Programm for solving tasks connected with video analytics (Images Calibration, FoV Calculation, Frames Extraction extraction).
+Programm for solving tasks connected with video analytics (Images Calibration, FoV Calculation, Frames Extraction).
 
 |        |                |
 | ------------- |:------------------:|
